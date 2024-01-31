@@ -1,0 +1,111 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	Inter web font															*/
+/* #################### - Developer Flarian Web - ######################### */
+
+/* Hairline */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Hairline.eot');
+	src:
+		url('Inter-Hairline.eot?#iefix') format('embedded-opentype'),
+		url('Inter-Hairline.woff2') format('woff2'),
+		url('Inter-Hairline.woff') format('woff'),
+		url('Inter-Hairline.ttf') format('truetype');
+	font-weight: 100;
+}
+
+/* Thin */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Thin.eot');
+	src:
+		url('Inter-Thin.eot?#iefix') format('embedded-opentype'),
+		url('Inter-Thin.woff2') format('woff2'),
+		url('Inter-Thin.woff') format('woff'),
+		url('Inter-Thin.ttf') format('truetype');
+	font-weight: 200;
+}
+
+/* Light */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Light.eot');
+	src:
+		url('Inter-Light.eot?#iefix') format('embedded-opentype'),
+		url('Inter-Light.woff2') format('woff2'),
+		url('Inter-Light.woff') format('woff'),
+		url('Inter-Light.ttf') format('truetype');
+	font-weight: 300;
+}
+
+/* Regular */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Regular.eot');
+	src:
+		url('Inter-Regular.eot?#iefix') format('embedded-opentype'),
+		url('Inter-Regular.woff2') format('woff2'),
+		url('Inter-Regular.woff') format('woff'),
+		url('Inter-Regular.ttf') format('truetype');
+	font-weight: 400;
+}
+
+/* Medium */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Medium.eot');
+	src:
+		url('Inter-Medium.eot?#iefix') format('embedded-opentype'),
+		url('Inter-Medium.woff2') format('woff2'),
+		url('Inter-Medium.woff') format('woff'),
+		url('Inter-Medium.ttf') format('truetype');
+	font-weight: 500;
+}
+
+/* Semibold */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-SemiBold.eot');
+	src:
+		url('Inter-SemiBold.eot?#iefix') format('embedded-opentype'),
+		url('Inter-SemiBold.woff2') format('woff2'),
+		url('Inter-SemiBold.woff') format('woff'),
+		url('Inter-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+}
+
+/* Bold */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Bold.eot');
+	src:
+		url('Inter-Bold.eot?#iefix') format('embedded-opentype'),
+		url('Inter-Bold.woff2') format('woff2'),
+		url('Inter-Bold.woff') format('woff'),
+		url('Inter-Bold.ttf') format('truetype');
+	font-weight: 700;
+}
+
+/* Heavy */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-ExtraBold.eot');
+	src:
+		url('Inter-ExtraBold.eot?#iefix') format('embedded-opentype'),
+		url('Inter-ExtraBold.woff2') format('woff2'),
+		url('Inter-ExtraBold.woff') format('woff'),
+		url('Inter-ExtraBold.ttf') format('truetype');
+	font-weight: 800;
+}
+
+/* Black */
+@font-face {
+	font-family: 'Inter';
+	src: url('Inter-Black.eot');
+	src:
+		url('Inter-Black.eot?#iefix') format('embedded-opentype'),
+		url('Inter-Black.woff2') format('woff2'),
+		url('Inter-Black.woff') format('woff'),
+		url('Inter-Black.ttf') format('truetype');
+	font-weight: 900;
+}

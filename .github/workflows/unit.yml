@@ -103,16 +103,20 @@ jobs:
                   report="${report//'>'/'&gt;'}"
                   message="$message<code>$report</code>"
 
-                  echo "::set-output name=message::$message"
+                  echo "$message" > message.txt
 
             - name: Send telegram notify
               run: |
                   curl -s -X POST \
                   -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
                   -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
-                  -d "text=${{ steps.prepare_message.outputs.message }}" \
+                  -d "text=$(cat message.txt)" \
                   -d "parse_mode=html" \
+                  -o response.json \
                   "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
+
+            - name: Check response
+              run: cat response.json
 
             # - name: Send telegram notify
             #   run: |

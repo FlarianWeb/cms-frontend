@@ -40,7 +40,7 @@ jobs:
               run: pnpm install
 
             - name: Run tests
-              run: npm run test:unit:report
+              run: npx vitest --reporter=json
 
             - name: Debug unit.log
               run: cat log/unit.log

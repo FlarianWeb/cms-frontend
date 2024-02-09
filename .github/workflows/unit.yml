@@ -43,9 +43,11 @@ jobs:
               run: cat log/unit.log
 
             - name: report
+              id: report
               run: |
                   report="- Node.js version: ${{ matrix.node-version }} %0A- Test results: %0A $(tail -n +7 log/unit.log)"
-                  echo "::set-output name=report::$report"
+                  echo "UNIT_REPORT=$report" >> "$GITHUB_OUTPUT"
+              #   echo "::set-output name=report::$report"
 
             # - name: Send telegram notify
             #   run: |
@@ -74,10 +76,11 @@ jobs:
                   author="${{ github.actor }}"
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-                  message="<b>Автор:</b> $author %0A"
+                  message="<b>Новый запрос на слияние</b> %0A"
+                  message="$message<b>Автор:</b> $author %0A"
                   message="$message<b>Репозиторий:</b> $repository %0A"
-                  message="$message<b>Изменения:</b> $commitUrl %0A"
-                  message="$message<code>${{ needs.unit_test.outputs.report }}</code>"
+                  message="$message<b>Ревью:</b> <a href="$commitUrl">Перейти к коммиту</a> %0A"
+                  message="$message<code>${{ needs.unit_test.outputs.UNIT_REPORT }}</code>"
 
                   curl -s -X POST \
                   -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \

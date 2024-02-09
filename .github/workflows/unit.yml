@@ -24,11 +24,11 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
-            - name: Install jq
-              run: |
-                  wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
-                  chmod +x jq
-                  sudo mv jq /usr/local/bin/
+            # - name: Install jq
+            #   run: |
+            #       wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+            #       chmod +x jq
+            #       sudo mv jq /usr/local/bin/
 
             - uses: pnpm/action-setup@v3
               name: Install pnpm

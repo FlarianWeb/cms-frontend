@@ -42,12 +42,18 @@ jobs:
             - name: Debug unit.log
               run: cat log/unit.log
 
-            - name: report
-              id: report
+            - name: Generate report
               run: |
-                  report="- Node.js version: ${{ matrix.node-version }} %0A- Test results: %0A $(tail -n +7 log/unit.log)"
-                  echo "::set-output name=report::$report"
-              #   echo "::set-output name=report::$report"
+                  echo "- Node.js version: ${{ matrix.node-version }}" > report.txt
+                  echo "- Test results:" >> report.txt
+                  tail -n +7 log/unit.log >> report.txt
+
+            # - name: report
+            #   id: report
+            #   run: |
+            #       report="- Node.js version: ${{ matrix.node-version }} %0A- Test results: %0A $(tail -n +7 log/unit.log)"
+            #       echo "::set-output name=report::$report"
+            #   echo "::set-output name=report::$report"
 
             # - name: Send telegram notify
             #   run: |
@@ -80,7 +86,7 @@ jobs:
                   message="$message<b>Автор:</b> $author %0A"
                   message="$message<b>Репозиторий:</b> $repository %0A"
                   message="$message<b>Ревью:</b> <a href="$commitUrl">Перейти к коммиту</a> %0A"
-                  message="$message<code>${{ needs.unit_test.outputs.report }}</code>"
+                  message="$message<code>$(cat report.txt)</code>"
 
                   curl -s -X POST \
                   -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \

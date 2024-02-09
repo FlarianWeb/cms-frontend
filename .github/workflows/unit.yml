@@ -58,7 +58,7 @@ jobs:
                   author="${{ github.actor }}"
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-                  message="<b>Автор:</b> $author<br><b>Репозиторий:</b> $repository<br>Изменения: $commitUrl<br>${{ steps.report.outputs.report }}"
+                  message="<b>Автор:</b> $author<br><b>Репозиторий:</b> $repository<br>Изменения: $commitUrl${{ steps.report.outputs.report }}"
 
                   curl -s -X POST \
                     -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \

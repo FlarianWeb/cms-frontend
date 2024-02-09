@@ -40,7 +40,7 @@ jobs:
               run: pnpm install
 
             - name: Run tests
-              run: pnpm test:uni:report
+              run: pnpm test:unit:report
 
             - name: Debug unit-log.json
               run: cat log/unit-log.json

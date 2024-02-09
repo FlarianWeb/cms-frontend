@@ -40,7 +40,7 @@ jobs:
               run: pnpm install
 
             - name: Run tests
-              run: pnpm test:unit --silent --reporter json --outputFile log/unit-log.json
+              run: pnpm test:unit:report
 
             - name: Generate report
               run: |

@@ -35,4 +35,10 @@ jobs:
       run: pnpm install
       
     - name: Unit run
-      run: pnpm test:unit
+      run: pnpm test:unit 2> __test_error.log 1> __test_out.log
+
+    - name: Send telegram notification
+      run: |
+        msg_text='${{ github.actor }} created commit: \r\n Commit message: ${{ github.event.commits[0].message }} \r\n Repository: ${{ github.repository }} \r\n See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}'
+        curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage' \
+        -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}&text=${msg_text}&message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}"

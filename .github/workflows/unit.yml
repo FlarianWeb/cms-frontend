@@ -40,45 +40,45 @@ jobs:
               run: pnpm install
 
             - name: Run tests
-              run: npx vitest --reporter=json
+              run: pnpm test:unit --reporter=basic 1> ./log/unit.log
 
             - name: Debug unit.log
               run: cat log/unit.log
 
-            - name: Generate report
-              run: |
-                  report=$(cat log/unit.log)
-                  success=$(echo $report | jq -r '.success')
-                  numTotalTestSuites=$(echo $report | jq -r '.numTotalTestSuites')
-                  numPassedTestSuites=$(echo $report | jq -r '.numPassedTestSuites')
-                  numTotalTests=$(echo $report | jq -r '.numTotalTests')
-                  numPassedTests=$(echo $report | jq -r '.numPassedTests')
-                  testResults=$(echo $report | jq -r '.testResults[]')
+            # - name: Generate report
+            #   run: |
+            #       report=$(cat log/unit.log)
+            #       success=$(echo $report | jq -r '.success')
+            #       numTotalTestSuites=$(echo $report | jq -r '.numTotalTestSuites')
+            #       numPassedTestSuites=$(echo $report | jq -r '.numPassedTestSuites')
+            #       numTotalTests=$(echo $report | jq -r '.numTotalTests')
+            #       numPassedTests=$(echo $report | jq -r '.numPassedTests')
+            #       testResults=$(echo $report | jq -r '.testResults[]')
 
-                  message="Тестирование ${success=='true'?'🟢 успешно':'🔴 неудачно'}<br><b>Всего наборов: ${numTotalTestSuites}</b><br><b>Успешно пройдено: ${numPassedTestSuites}</b><br><b>Всего тест кейсов: ${numTotalTests}</b><br><b>Успешно пройдено: ${numPassedTests}</b>"
+            #       message="Тестирование ${success=='true'?'🟢 успешно':'🔴 неудачно'}<br><b>Всего наборов: ${numTotalTestSuites}</b><br><b>Успешно пройдено: ${numPassedTestSuites}</b><br><b>Всего тест кейсов: ${numTotalTests}</b><br><b>Успешно пройдено: ${numPassedTests}</b>"
 
-                  while IFS= read -r result; do
-                    ancestorTitles=$(echo $result | jq -r '.assertionResults[0].ancestorTitles[0]')
-                    fullName=$(echo $result | jq -r '.assertionResults[0].fullName')
-                    status=$(echo $result | jq -r '.assertionResults[0].status')
-                    message="$message<br><br><b>$ancestorTitles</b><br>$fullName: $status"
-                  done <<< "$testResults"
+            #       while IFS= read -r result; do
+            #         ancestorTitles=$(echo $result | jq -r '.assertionResults[0].ancestorTitles[0]')
+            #         fullName=$(echo $result | jq -r '.assertionResults[0].fullName')
+            #         status=$(echo $result | jq -r '.assertionResults[0].status')
+            #         message="$message<br><br><b>$ancestorTitles</b><br>$fullName: $status"
+            #       done <<< "$testResults"
 
-                  echo "::set-output name=report::$message"
+            #       echo "::set-output name=report::$message"
 
-            - name: Send telegram notify
-              run: |
-                  author="${{ github.actor }}"
-                  repository="${{ github.repository }}"
-                  commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-                  message="<b>Автор:</b> $author<br><b>Репозиторий:</b> $repository<br>Изменения: $commitUrl<br>${{ steps.report.outputs.report }}"
+            # - name: Send telegram notify
+            #   run: |
+            #       author="${{ github.actor }}"
+            #       repository="${{ github.repository }}"
+            #       commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+            #       message="<b>Автор:</b> $author<br><b>Репозиторий:</b> $repository<br>Изменения: $commitUrl<br>${{ steps.report.outputs.report }}"
 
-                  curl -s -X POST \
-                    -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
-                    -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
-                    -d "text=$message" \
-                    -d "parse_mode=html" \
-                    "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
+            #       curl -s -X POST \
+            #         -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
+            #         -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
+            #         -d "text=$message" \
+            #         -d "parse_mode=html" \
+            #         "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
 
         # - uses: pnpm/action-setup@v3
         #   name: Install pnpm

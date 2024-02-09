@@ -46,7 +46,7 @@ jobs:
             let testMessage = '';
 
             testMessage += `<b>Всего наборов тестов:</b> ${parsedLog.numTotalTestSuites}<br>`;
-            testMessage += `<b>Успешно пройдено:</b> ${parsedLog.numPassedTestSuites}<br>`;
+            testMessage += `<b>Успешно пройдено:</b> 🟢 ${parsedLog.numPassedTestSuites}<br>`;
 
             return testMessage;
           } catch(err) {

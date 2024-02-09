@@ -13,7 +13,7 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [18]
+                node-version: [16.x, 18.x, 20.x]
 
         steps:
             - name: Checkout code
@@ -48,9 +48,9 @@ jobs:
             - name: Debug unit.log
               run: cat log/unit.log
 
-            - name: Generate report
+            - name: report
               run: |
-                  report="- Node.js version: ${{ matrix.node-version }}\n- Test results:\n$(tail -n +7 log/unit.log)"
+                  report="- Node.js version: ${{ matrix.node-version }} %0A- Test results: %0A $(tail -n +7 log/unit.log)"
                   echo "::set-output name=report::$report"
 
             - name: Send telegram notify
@@ -58,9 +58,10 @@ jobs:
                   author="${{ github.actor }}"
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-                  message="<b>Автор:</b> $author \n"
-                  message="$message <b>Репозиторий:</b> $repository \n"
-                  message="$message <b>Изменения:</b> $commitUrl${{ steps.report.outputs.report }} \n"
+                  message="<b>Автор:</b> $author %0A"
+                  message="$message <b>Репозиторий:</b> $repository %0A"
+                  message="$message <b>Изменения:</b> $commitUrl %0A"
+                  message="$message <code>${{ steps.report.outputs.report }}</code>"
 
                   curl -s -X POST \
                     -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \

@@ -31,10 +31,13 @@ jobs:
                   sudo mv jq /usr/local/bin/
 
             - uses: pnpm/action-setup@v3
-              name: Install dependencies
+              name: Install pnpm
               with:
                   version: 8
                   run_install: false
+
+            - name: Install dependencies
+              run: pnpm install
 
             - name: Run tests
               run: pnpm test:unit --silent --reporter json --outputFile log/unit-log.json

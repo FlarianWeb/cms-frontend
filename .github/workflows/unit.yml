@@ -24,11 +24,11 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
-            # - name: Install jq
-            #   run: |
-            #       wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
-            #       chmod +x jq
-            #       sudo mv jq /usr/local/bin/
+            - name: Install jq
+              run: |
+                  wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+                  chmod +x jq
+                  sudo mv jq /usr/local/bin/
 
             - uses: pnpm/action-setup@v3
               name: Install pnpm
@@ -40,7 +40,7 @@ jobs:
               run: pnpm install
 
             - name: Run tests
-              run: pnpm test:unit --silent --reporter json --outputFile log/unit-log.json
+              run: pnpm test:uni:report
 
             - name: Debug unit-log.json
               run: cat log/unit-log.json

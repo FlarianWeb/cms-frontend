@@ -88,20 +88,46 @@ jobs:
               with:
                   name: report
 
-            - name: Send telegram notify
+            - name: Prepare message
               run: |
                   author="${{ github.actor }}"
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-                  message="<b>Новый запрос на слияние</b> %0A"
-                  message="$message<b>Автор:</b> $author %0A"
+                  message="<b>Автор:</b> $author %0A"
                   message="$message<b>Репозиторий:</b> $repository %0A"
-                  message="$message<b>Ревью:</b> <a href="$commitUrl">Перейти к коммиту</a> %0A"
-                  message="$message<code>$(cat report.txt)</code>"
+                  message="$message<b>Изменения:</b> $commitUrl %0A"
+                  report=$(cat report.txt)
+                  report="${report//'%'/'%25'}"
+                  report="${report//$'\n'/'%0A'}"
+                  report="${report//$'\r'/'%0D'}"
+                  report="${report//'>'/'&gt;'}"
+                  message="$message<code>$report</code>"
 
+                  echo "::set-output name=message::$message"
+
+            - name: Send telegram notify
+              run: |
                   curl -s -X POST \
                   -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
                   -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
-                  -d "text=$message" \
+                  -d "text=${{ steps.prepare_message.outputs.message }}" \
                   -d "parse_mode=html" \
                   "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
+
+            # - name: Send telegram notify
+            #   run: |
+            #       author="${{ github.actor }}"
+            #       repository="${{ github.repository }}"
+            #       commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+            #       message="<b>Новый запрос на слияние</b> %0A"
+            #       message="$message<b>Автор:</b> $author %0A"
+            #       message="$message<b>Репозиторий:</b> $repository %0A"
+            #       message="$message<b>Ревью:</b> <a href="$commitUrl">Перейти к коммиту</a> %0A"
+            #       message="$message<code>$(cat report.txt)</code>"
+
+            #       curl -s -X POST \
+            #       -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
+            #       -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
+            #       -d "text=$message" \
+            #       -d "parse_mode=html" \
+            #       "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"

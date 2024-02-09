@@ -44,7 +44,7 @@ jobs:
 
             - name: Generate report
               run: |
-                  report=$(cat log/unit-log.json)
+                  report=$(cat ./log/unit-log.json)
                   success=$(echo $report | jq -r '.success')
                   numTotalTestSuites=$(echo $report | jq -r '.numTotalTestSuites')
                   numPassedTestSuites=$(echo $report | jq -r '.numPassedTestSuites')
@@ -63,7 +63,7 @@ jobs:
 
                   echo "::set-output name=report::$message"
 
-            - name: Generate report
+            - name: Send telegram notify
               run: |
                   author="${{ github.actor }}"
                   repository="${{ github.repository }}"

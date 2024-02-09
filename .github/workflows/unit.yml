@@ -39,8 +39,11 @@ jobs:
             - name: Install dependencies
               run: pnpm install
 
+            # - name: Create log directory
+            #   run: mkdir log
+
             - name: Run tests
-              run: pnpm test:unit --reporter=basic 1> /log/unit.log
+              run: pnpm test:unit --reporter=basic 1> log/unit.log
 
             - name: Debug unit.log
               run: cat log/unit.log

@@ -1,61 +1,112 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Unit tests
+name: Pull Request Tests
 
 on:
-  pull_request:
-    branches: [ "master" ]
+    pull_request:
+        branches: ['master']
 
 jobs:
-  unit_test:
+    unit_test:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16.x, 18.x, 20.x]
 
-    steps:
-    - uses: actions/checkout@v3
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
+            - name: Set up Node.js v.${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
 
-    - uses: pnpm/action-setup@v3
-      name: Install pnpm
-      with:
-        version: 8
-        run_install: false
+            - name: Install jq
+              run: |
+                  wget -O jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+                  chmod +x jq
+                  sudo mv jq /usr/local/bin/
 
-    - name: Install dependencies
-      run: pnpm install
-      
-    - name: Unit run
-      run: pnpm test:unit --silent --reporter json --outputFile log/unit-log.json
-    
-    - name: Create test report
-      uses: actions/github-script@v7
-      id: unit-test-report
-      with:
-        result-encoding: string
-        script: |
-          try {
-            const fs = require('fs')
-            const unitLogJson = fs.readFileSync('./log/unit-log.json')
-            const parsedLog = JSON.parse(unitLogJson)
+            - name: Install dependencies
+              run: pnpm install
 
-            let testMessage = '';
+            - name: Run tests
+              run: pnpm test:unit --silent --reporter json --outputFile log/unit-log.json
 
-            testMessage += `<b>Всего наборов тестов:</b> ${parsedLog.numTotalTestSuites}<br>`;
-            testMessage += `<b>Успешно пройдено:</b> 🟢 ${parsedLog.numPassedTestSuites}<br>`;
+            - name: Generate report
+              run: |
+                  report=$(cat log/unit-log.json)
+                  success=$(echo $report | jq -r '.success')
+                  numTotalTestSuites=$(echo $report | jq -r '.numTotalTestSuites')
+                  numPassedTestSuites=$(echo $report | jq -r '.numPassedTestSuites')
+                  numTotalTests=$(echo $report | jq -r '.numTotalTests')
+                  numPassedTests=$(echo $report | jq -r '.numPassedTests')
+                  testResults=$(echo $report | jq -r '.testResults[]')
 
-            return testMessage;
-          } catch(err) {
-            core.error("Ошибка при чтении или анализе JSON")
-            core.setFailed(err)
-          }
-          
-    - name: Send telegram notify
-      run: |
-        msg_text='<b>Автор:</b> ${{ github.actor }}<br><b>Репозиторий:</b> ${{ github.repository }}<br>Изменения: https://github.com/${{ github.repository }}/commit/${{github.sha}}<br>${{steps.result-encoding.outputs.result}}'
-        curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage' \
-        -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}&text=${msg_text}&message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}parse_mode=html"
+                  message="Тестирование ${success=='true'?'🟢 успешно':'🔴 неудачно'}<br><b>Всего наборов: ${numTotalTestSuites}</b><br><b>Успешно пройдено: ${numPassedTestSuites}</b><br><b>Всего тест кейсов: ${numTotalTests}</b><br><b>Успешно пройдено: ${numPassedTests}</b>"
+
+                  while IFS= read -r result; do
+                    ancestorTitles=$(echo $result | jq -r '.assertionResults[0].ancestorTitles[0]')
+                    fullName=$(echo $result | jq -r '.assertionResults[0].fullName')
+                    status=$(echo $result | jq -r '.assertionResults[0].status')
+                    message="$message<br><br><b>$ancestorTitles</b><br>$fullName: $status"
+                  done <<< "$testResults"
+
+                  echo "::set-output name=report::$message"
+
+            - name: Generate report
+              run: |
+                  author="${{ github.actor }}"
+                  repository="${{ github.repository }}"
+                  commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
+                  message="<b>Автор:</b> $author<br><b>Репозиторий:</b> $repository<br>Изменения: $commitUrl<br>${{ steps.report.outputs.report }}"
+
+                  curl -s -X POST \
+                    -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
+                    -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
+                    -d "text=$message" \
+                    -d "parse_mode=html" \
+                    "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
+
+        # - uses: pnpm/action-setup@v3
+        #   name: Install pnpm
+        #   with:
+        #     version: 8
+        #     run_install: false
+
+        # - name: Install dependencies
+        #   run: pnpm install
+
+        # - name: Unit run
+        #   run: pnpm test:unit --silent --reporter json --outputFile log/unit-log.json
+
+        # - name: Create test report
+        #   uses: actions/github-script@v7
+        #   id: unit-test-report
+        #   with:
+        #     result-encoding: string
+        #     script: |
+        #       try {
+        #         const fs = require('fs')
+        #         const unitLogJson = fs.readFileSync('./log/unit-log.json')
+        #         const parsedLog = JSON.parse(unitLogJson)
+
+        #         let testMessage = '';
+
+        #         testMessage += `<b>Всего наборов тестов:</b> ${parsedLog.numTotalTestSuites}<br>`;
+        #         testMessage += `<b>Успешно пройдено:</b> 🟢 ${parsedLog.numPassedTestSuites}<br>`;
+
+        #         return testMessage;
+        #       } catch(err) {
+        #         core.error("Ошибка при чтении или анализе JSON")
+        #         core.setFailed(err)
+        #       }
+
+        # - name: Send telegram notify
+        #   run: |
+        #     msg_text='<b>Автор:</b> ${{ github.actor }}<br><b>Репозиторий:</b> ${{ github.repository }}<br>Изменения: https://github.com/${{ github.repository }}/commit/${{github.sha}}<br>${{steps.result-encoding.outputs.result}}'
+        #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage' \
+        #     -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}&text=${msg_text}&message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}parse_mode=html"

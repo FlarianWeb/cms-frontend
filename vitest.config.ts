@@ -9,8 +9,7 @@ export default mergeConfig(
 			environment: 'jsdom',
 			exclude: [...configDefaults.exclude, 'e2e/*'],
 			root: fileURLToPath(new URL('./', import.meta.url)),
-			// reporters: ['json'],
-			outputFile: { json: 'log/unit-log.json' },
+			outputFile: { json: 'log/unit.log' },
 		},
 	})
 );

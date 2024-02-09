@@ -42,12 +42,12 @@ jobs:
             - name: Run tests
               run: pnpm test:unit:report
 
-            - name: Debug unit-log.json
-              run: cat log/unit-log.json
+            - name: Debug unit.log
+              run: cat log/unit.log
 
             - name: Generate report
               run: |
-                  report=$(cat log/unit-log.json)
+                  report=$(cat log/unit.log)
                   success=$(echo $report | jq -r '.success')
                   numTotalTestSuites=$(echo $report | jq -r '.numTotalTestSuites')
                   numPassedTestSuites=$(echo $report | jq -r '.numPassedTestSuites')

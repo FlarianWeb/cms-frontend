@@ -89,6 +89,9 @@ jobs:
               with:
                   name: report
 
+            - name: Debug report.txt
+              run: cat report.txt
+
             - name: Prepare message
               run: |
                   author="${{ github.actor }}"
@@ -100,8 +103,6 @@ jobs:
                   *Автор:* $author
                   *$repository*
                   *Ревью: [Перейти к коммиту]($commitUrl)*
-
-                  $(cat report.txt)
                   "
 
                   echo "$message" > message.txt

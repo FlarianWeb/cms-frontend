@@ -75,8 +75,9 @@ jobs:
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
                   message="
-                  *Запрос на слияние*
-                  *$repository*
+                  ✅ *Тесты успешно пройдены*
+                  🔓 *Запрос на слияние ожидает проверки*
+                  🔗 *$repository*
 
                   *Автор:* $author
                   [Перейти к коммиту]($commitUrl)
@@ -90,7 +91,7 @@ jobs:
                   -F "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
                   -F "document=@report.log" \
                   -F "caption=$(cat message.txt)" \
-                  -F "parse_mode=Markdown" \
+                  -F "parse_mode=MarkdownV2" \
                   -F "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
                   "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendDocument"
 

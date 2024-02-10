@@ -78,31 +78,33 @@ jobs:
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
-                  message1="
-                  *Тесты успешно пройдены*
-                  *Запрос на слияние ожидает ревью*
-                  *$repository*
-
-                  *Автор:* $author
-                  [Перейти к коммиту]($commitUrl)
-                  "
+                  if [[ "$author" == "MusinRamil" ]]; then
+                    REVIEWER="barsukov-d"
+                  elif [[ "$author" == "barsukov-d" ]]; then
+                    REVIEWER="MusinRamil"
+                  else
+                    REVIEWER="MusinRamil"
 
                   if [ ${{ needs.unit_test.result }} == 'success' ]; then
                   message="
+
+                  $repository
                   ✅ Тесты успешно пройдены
                   🔓 Запрос на слияние ожидает ревью
-                  $repository
 
                   Автор: $author
+                  Ревьюер: $REVIEWER
                   [Перейти к коммиту]($commitUrl)
                   "
                   else
                   message="
+
+                  $repository
                   ❌ Тесты провалены
                   🔒 Запрос на слияние заблокирован
-                  $repository
 
                   Автор: $author
+                  Ревьюер: $REVIEWER
                   [Перейти к коммиту]($commitUrl)
                   "
                   fi

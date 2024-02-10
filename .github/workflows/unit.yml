@@ -75,7 +75,7 @@ jobs:
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
                   message="
-                  ![✅] *Тесты успешно пройдены*
+                  ![✅](✅) *Тесты успешно пройдены*
                   *Запрос на слияние ожидает проверки*
                   *$repository*
 
@@ -93,6 +93,7 @@ jobs:
                   -F "caption=$(cat message.txt)" \
                   -F "parse_mode=MarkdownV2" \
                   -F "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
+                  -o response.json \
                   "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendDocument"
 
             - name: Check response

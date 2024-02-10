@@ -34,7 +34,7 @@ jobs:
               run: mkdir log
 
             - name: Run tests
-              run: pnpm test:unit --reporter=basic > log/unit.log
+              run: pnpm test:unit --reporter=basic 1> log/unit.log 2> log/unit.log
 
             - name: Check test results
               if: always()

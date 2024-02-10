@@ -79,11 +79,12 @@ jobs:
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
                   if [[ "$author" == "MusinRamil" ]]; then
-                    REVIEWER="barsukov-d"
+                    reviewer="barsukov-d"
                   elif [[ "$author" == "barsukov-d" ]]; then
-                    REVIEWER="MusinRamil"
+                    reviewer="MusinRamil"
                   else
-                    REVIEWER="MusinRamil"
+                    reviewer="MusinRamil"
+                  fi
 
                   if [ ${{ needs.unit_test.result }} == 'success' ]; then
                   message="
@@ -93,7 +94,7 @@ jobs:
                   🔓 Запрос на слияние ожидает ревью
 
                   Автор: $author
-                  Ревьюер: $REVIEWER
+                  Ревьюер: $reviewer
                   [Перейти к коммиту]($commitUrl)
                   "
                   else
@@ -104,7 +105,7 @@ jobs:
                   🔒 Запрос на слияние заблокирован
 
                   Автор: $author
-                  Ревьюер: $REVIEWER
+                  Ревьюер: $reviewer
                   [Перейти к коммиту]($commitUrl)
                   "
                   fi

@@ -39,15 +39,15 @@ jobs:
             - name: Run tests
               run: pnpm test:unit --reporter=basic 1> log/unit.log
 
-            - name: Debug unit.log
-              run: cat log/unit.log
-
             - name: Generate report
               run: |
                   echo "----------" >> report.txt
                   echo "- Node.js version: ${{ matrix.node-version }}" >> report.txt
                   echo "- Test results:" >> report.txt
                   tail -n +7 log/unit.log >> report.txt
+
+            - name: Debug report.txt
+              run: cat report.txt
 
             - name: Upload report artifact
               uses: actions/upload-artifact@v2

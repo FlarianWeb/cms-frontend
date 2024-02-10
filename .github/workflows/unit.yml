@@ -37,6 +37,7 @@ jobs:
               run: pnpm test:unit --reporter=basic 1> log/unit.log
 
             - name: Check test results
+              if: always()
               id: check_results
               run: |
                   if grep -q "✗" "${{ matrix.node-version }}_report.txt"; then
@@ -46,6 +47,7 @@ jobs:
                   fi
 
             - name: Generate report
+              if: always()
               run: |
                   echo "*Node.js version:* ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
                   echo "*Test results:*" >> ${{ matrix.node-version }}_report.txt
@@ -55,12 +57,15 @@ jobs:
                   echo "::set-output name=report_path::${{ matrix.node-version }}_report.txt"
 
             - name: Upload report artifact
+              if: always()
               uses: actions/upload-artifact@v2
               with:
                   name: reports
                   path: '*.txt'
 
     send_telegram_notify:
+        if: always()
+        needs: unit_test
         runs-on: ubuntu-latest
 
         steps:

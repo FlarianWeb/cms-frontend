@@ -16,6 +16,10 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Create log directory
+              if: always()
+              run: mkdir log
+
             - name: Set up Node.js v.${{ matrix.node-version }}
               uses: actions/setup-node@v3
               with:
@@ -30,28 +34,28 @@ jobs:
             - name: Install dependencies
               run: pnpm install
 
-            - name: Create log directory
-              run: mkdir log
-
             - name: Run tests
-              run: pnpm test:unit --reporter=basic 1> log/unit.log
+              run: pnpm test:unit --reporter=basic > log/unit.log 2>&1
 
             - name: Generate report
+              if: always()
               run: |
-                  echo "*Node.js version:* ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
-                  echo "*Test results:*" >> ${{ matrix.node-version }}_report.txt
+                  echo "Node.js version: ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
+                  echo "Test results:" >> ${{ matrix.node-version }}_report.txt
                   tail -n +7 log/unit.log >> ${{ matrix.node-version }}_report.txt
                   sed -i 's/\x1B\[[0-9;]*[JKmsu]//g' ${{ matrix.node-version }}_report.txt
                   echo "" >> ${{ matrix.node-version }}_report.txt
                   echo "::set-output name=report_path::${{ matrix.node-version }}_report.txt"
 
             - name: Upload report artifact
+              if: always()
               uses: actions/upload-artifact@v2
               with:
                   name: reports
                   path: '*.txt'
 
     send_telegram_notify:
+        if: always()
         needs: unit_test
         runs-on: ubuntu-latest
 
@@ -74,14 +78,37 @@ jobs:
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
-                  message="
-                  *Тесты успешно пройдены*
-                  *Запрос на слияние ожидает ревью*
-                  *$repository*
+                  if [[ "$author" == "MusinRamil" ]]; then
+                    reviewer="barsukov-d"
+                  elif [[ "$author" == "barsukov-d" ]]; then
+                    reviewer="MusinRamil"
+                  else
+                    reviewer="MusinRamil"
+                  fi
 
-                  *Автор:* $author
+                  if [ ${{ needs.unit_test.result }} == 'success' ]; then
+                  message="
+
+                  $repository
+                  ✅ Тесты успешно пройдены
+                  🔓 Запрос на слияние ожидает ревью
+
+                  Автор: $author
+                  Ревьюер: $reviewer
                   [Перейти к коммиту]($commitUrl)
                   "
+                  else
+                  message="
+
+                  $repository
+                  ❌ Тесты провалены
+                  🔒 Запрос на слияние заблокирован
+
+                  Автор: $author
+                  Ревьюер: $reviewer
+                  [Перейти к коммиту]($commitUrl)
+                  "
+                  fi
 
                   echo "$message" > message.txt
 

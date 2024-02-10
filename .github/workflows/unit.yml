@@ -44,7 +44,8 @@ jobs:
 
             - name: Generate report
               run: |
-                  echo "- Node.js version: ${{ matrix.node-version }}" > report.txt
+                  echo "----------" >> report.txt
+                  echo "- Node.js version: ${{ matrix.node-version }}" >> report.txt
                   echo "- Test results:" >> report.txt
                   tail -n +7 log/unit.log >> report.txt
 
@@ -102,7 +103,7 @@ jobs:
                   report="${report//$'\n'/'%0A'}"
                   report="${report//$'\r'/'%0D'}"
                   report="${report//'>'/'&gt;'}"
-                  message="$message%0A%0A$report"
+                  message="$message<code>$report</code>"
 
                   echo "$message" > message.txt
 

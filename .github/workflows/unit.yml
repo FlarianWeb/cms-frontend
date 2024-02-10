@@ -16,6 +16,10 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Create log directory
+              if: always()
+              run: mkdir log
+
             - name: Set up Node.js v.${{ matrix.node-version }}
               uses: actions/setup-node@v3
               with:
@@ -30,13 +34,8 @@ jobs:
             - name: Install dependencies
               run: pnpm install
 
-            - name: Create log directory
-              run: mkdir log
-
             - name: Run tests
               run: pnpm test:unit --reporter=basic > log/unit.log 2>&1
-            #   run: pnpm test:unit --reporter=basic | tee log/unit.log
-            #   run: pnpm test:unit --reporter=basic 1> log/unit.log
 
             - name: Generate report
               if: always()

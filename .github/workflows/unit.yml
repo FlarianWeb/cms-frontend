@@ -78,8 +78,6 @@ jobs:
                   author="${{ github.actor }}"
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-                  base_branch="${{ steps.branch_info.outputs.base_branch }}"
-                  head_branch="${{ steps.branch_info.outputs.head_branch }}"
 
                   message1="
                   *Тесты успешно пройдены*
@@ -97,7 +95,6 @@ jobs:
                   $repository
 
                   Автор: $author
-                  Коммит: Merge into ${{ github.head_ref }} from ${{ github.base_ref }}
                   [Перейти к коммиту]($commitUrl)
                   "
                   else
@@ -107,7 +104,6 @@ jobs:
                   $repository
 
                   Автор: $author
-                  Коммит: Merge into ${{ github.head_ref }} from ${{ github.base_ref }}
                   [Перейти к коммиту]($commitUrl)
                   "
                   fi

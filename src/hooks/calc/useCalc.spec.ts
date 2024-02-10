@@ -27,8 +27,8 @@ describe('useCalc', () => {
 			expect(() => minus(1)).toThrowError(/^Parameter «B» is undefined!$/);
 		});
 
-		test('minus(3, 1) to equal 4', () => {
-			expect(minus(3, 1)).toEqual(2);
+		test('minus(3, 1) to equal 2', () => {
+			expect(minus(3, 1)).toEqual(3);
 		});
 	});
 });

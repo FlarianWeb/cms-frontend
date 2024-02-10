@@ -46,14 +46,12 @@ jobs:
                   echo "::set-output name=report_path::${{ matrix.node-version }}_report.txt"
 
             - name: Upload report artifact
-              if: always()
               uses: actions/upload-artifact@v2
               with:
                   name: reports
                   path: '*.txt'
 
     send_telegram_notify:
-        if: always()
         needs: unit_test
         runs-on: ubuntu-latest
 
@@ -87,7 +85,7 @@ jobs:
 
                   echo "$message" > message.txt
 
-            - name: Send telegram success notify
+            - name: Send telegram notify
               run: |
                   curl -s -X POST \
                   -F "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \

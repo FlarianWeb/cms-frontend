@@ -93,15 +93,16 @@ jobs:
                   author="${{ github.actor }}"
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-                  message="<b>Автор:</b> $author %0A"
-                  message="$message<b>Репозиторий:</b> $repository %0A"
-                  message="$message<b>Изменения:</b> $commitUrl %0A"
+                  message="<b>Новый запрос на слияние</b> %0A"
+                  message="$message<b>Автор:</b> $author %0A"
+                  message="$message<b>$repository</b> %0A"
+                  message="$message<b>Ревью:</b> <a href="$commitUrl">Перейти к коммиту</a> %0A"
                   report=$(cat report.txt)
                   report="${report//'%'/'%25'}"
                   report="${report//$'\n'/'%0A'}"
                   report="${report//$'\r'/'%0D'}"
                   report="${report//'>'/'&gt;'}"
-                  message="$message<code>$report</code>"
+                  message="$message%0A%0A$report"
 
                   echo "$message" > message.txt
 

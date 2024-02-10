@@ -38,18 +38,18 @@ jobs:
 
             - name: Generate report
               run: |
-                  echo "----------" >> report.txt
-                  echo "- Node.js version: ${{ matrix.node-version }}" >> report.txt
-                  echo "- Test results:" >> report.txt
-                  cat log/unit.log >> report.txt
-                  echo "" >> report.txt
-              #   tail -n +7 log/unit.log >> report.txt
+                  echo "----------" >> ${{ matrix.node-version }}_report.txt
+                  echo "- Node.js version: ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
+                  echo "- Test results:" >> ${{ matrix.node-version }}_report.txt
+                  tail -n +7 log/unit.log >> ${{ matrix.node-version }}_report.txt
+                  echo "" >> ${{ matrix.node-version }}_report.txt
+                  echo "::set-output name=report_path::${{ matrix.node-version }}_report.txt"
 
             - name: Upload report artifact
               uses: actions/upload-artifact@v2
               with:
-                  name: report
-                  path: report.txt
+                  name: reports
+                  path: '*.txt'
 
     send_telegram_notify:
         needs: unit_test
@@ -59,7 +59,11 @@ jobs:
             - name: Download report artifact
               uses: actions/download-artifact@v2
               with:
-                  name: report
+                  name: reports
+
+            - name: Concatenate reports
+              run: |
+                  cat *.txt > report.txt
 
             - name: Debug report.txt
               run: cat report.txt

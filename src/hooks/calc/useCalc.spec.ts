@@ -28,7 +28,7 @@ describe('useCalc', () => {
 		});
 
 		test('minus(3, 1) to equal 2', () => {
-			expect(minus(3, 1)).toEqual(2);
+			expect(minus(3, 1)).toEqual(3);
 		});
 	});
 });

@@ -38,9 +38,8 @@ jobs:
 
             - name: Generate report
               run: |
-                  echo "----------" >> ${{ matrix.node-version }}_report.txt
-                  echo "- Node.js version: ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
-                  echo "- Test results:" >> ${{ matrix.node-version }}_report.txt
+                  echo "*Node.js version:* ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
+                  echo "*Test results:*" >> ${{ matrix.node-version }}_report.txt
                   tail -n +7 log/unit.log >> ${{ matrix.node-version }}_report.txt
                   echo "" >> ${{ matrix.node-version }}_report.txt
                   echo "::set-output name=report_path::${{ matrix.node-version }}_report.txt"

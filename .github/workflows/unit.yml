@@ -34,20 +34,9 @@ jobs:
               run: mkdir log
 
             - name: Run tests
-              run: pnpm test:unit --reporter=basic 1> log/unit.log 2> log/unit.log
-
-            - name: Check test results
-              if: always()
-              id: check_results
-              run: |
-                  if grep -q "✗" "${{ matrix.node-version }}_report.txt"; then
-                  echo "::set-output name=has_errors::true"
-                  else
-                  echo "::set-output name=has_errors::false"
-                  fi
+              run: pnpm test:unit --reporter=basic 1> log/unit.log
 
             - name: Generate report
-              if: always()
               run: |
                   echo "*Node.js version:* ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
                   echo "*Test results:*" >> ${{ matrix.node-version }}_report.txt
@@ -98,19 +87,7 @@ jobs:
 
                   echo "$message" > message.txt
 
-            - name: Send telegram erorr notify
-              if: steps.check_results.outputs.has_errors == 'true'
-              run: |
-                  curl -s -X POST \
-                  -F "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
-                  -F "document=@report.log" \
-                  -F "caption=Один или несколько тест-кейсов упали!" \
-                  -F "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
-                  -o response.json \
-                  "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
-
             - name: Send telegram success notify
-              if: steps.check_results.outputs.has_errors == 'false'
               run: |
                   curl -s -X POST \
                   -F "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \

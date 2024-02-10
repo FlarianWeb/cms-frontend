@@ -61,7 +61,6 @@ jobs:
                   path: '*.txt'
 
     send_telegram_notify:
-        needs: unit_test
         runs-on: ubuntu-latest
 
         steps:

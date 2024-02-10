@@ -96,8 +96,8 @@ jobs:
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
                   message="
-                  *Новый запрос на слияние*"
-                  *Автор:* $author"
+                  *Новый запрос на слияние*
+                  *Автор:* $author
                   *$repository*
                   *Ревью: [Перейти к коммиту]($commitUrl)*
 

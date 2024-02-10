@@ -75,7 +75,8 @@ jobs:
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
                   message="
-                  *Запрос на слияние*
+                  *Тесты успешно пройдены*
+                  *Запрос на слияние ожидает ревью*
                   *$repository*
 
                   *Автор:* $author

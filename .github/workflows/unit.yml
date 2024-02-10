@@ -82,7 +82,7 @@ jobs:
                   [Перейти к коммиту]($commitUrl)
 
                   *Результаты тестирования:*
-                  ```$(cat test_report.log)```
+                  $(cat test_report.log)
                   "
 
                   echo "$message" > message.txt

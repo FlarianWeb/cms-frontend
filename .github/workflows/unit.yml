@@ -34,7 +34,8 @@ jobs:
               run: mkdir log
 
             - name: Run tests
-              run: pnpm test:unit --reporter=basic | tee log/unit.log
+              run: pnpm test:unit --reporter=basic > log/unit.log 2>&1
+            #   run: pnpm test:unit --reporter=basic | tee log/unit.log
             #   run: pnpm test:unit --reporter=basic 1> log/unit.log
 
             - name: Generate report
@@ -97,23 +98,23 @@ jobs:
 
                   if [ ${{ needs.unit_test.result }} == 'success' ]; then
                     message="
-                      ✅ Тесты успешно пройдены
-                      🔓 Запрос на слияние ожидает ревью
-                      $repository
+                    ✅ Тесты успешно пройдены
+                    🔓 Запрос на слияние ожидает ревью
+                    $repository
 
-                      Автор: $author
-                      Коммит: $commit_message
-                      [Перейти к коммиту]($commitUrl)
+                    Автор: $author
+                    Коммит: $commit_message
+                    [Перейти к коммиту]($commitUrl)
                     "
                   else
                     message="
-                      ❌ Тесты провалены
-                      🔒 Запрос на слияние заблокирован
-                      $repository
+                    ❌ Тесты провалены
+                    🔒 Запрос на слияние заблокирован
+                    $repository
 
-                      Автор: $author
-                      Коммит: $commit_message
-                      [Перейти к коммиту]($commitUrl)
+                    Автор: $author
+                    Коммит: $commit_message
+                    [Перейти к коммиту]($commitUrl)
                     "
                   fi
 

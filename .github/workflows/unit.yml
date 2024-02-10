@@ -73,6 +73,11 @@ jobs:
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
+                  report=$(cat report.txt)
+                  report="${report//'%'/'%25'}"
+                  report="${report//$'\n'/'%0A'}"
+                  report="${report//$'\r'/'%0D'}"
+
                   message="
                   *Запрос на слияние*
                   *$repository*
@@ -80,7 +85,7 @@ jobs:
                   *Автор:* $author
                   [Перейти к коммиту]($commitUrl)
 
-                  $(cat report.txt)
+                  $report
                   "
 
                   echo "$message" > message.txt

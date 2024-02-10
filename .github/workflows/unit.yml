@@ -80,7 +80,7 @@ jobs:
                   *Автор:* $author
                   [Перейти к коммиту]($commitUrl)
 
-                  ```$(cat report.txt)```
+                  $(cat report.txt)
                   "
 
                   echo "$message" > message.txt

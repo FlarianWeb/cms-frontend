@@ -64,8 +64,8 @@ jobs:
               run: |
                   cat *.txt > test_report.log
 
-            - name: Debug report.txt
-              run: cat report.txt
+            - name: Debug test_report.log
+              run: cat test_report.log
 
             - name: Prepare message
               run: |

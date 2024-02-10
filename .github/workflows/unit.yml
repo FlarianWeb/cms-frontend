@@ -41,6 +41,7 @@ jobs:
                   echo "*Node.js version:* ${{ matrix.node-version }}" >> ${{ matrix.node-version }}_report.txt
                   echo "*Test results:*" >> ${{ matrix.node-version }}_report.txt
                   tail -n +7 log/unit.log >> ${{ matrix.node-version }}_report.txt
+                  sed -i 's/\x1B\[[0-9;]*[JKmsu]//g' ${{ matrix.node-version }}_report.txt
                   echo "" >> ${{ matrix.node-version }}_report.txt
                   echo "::set-output name=report_path::${{ matrix.node-version }}_report.txt"
 

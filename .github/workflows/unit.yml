@@ -63,10 +63,10 @@ jobs:
 
             - name: Concatenate reports
               run: |
-                  cat *.txt > test_report.log
+                  cat *.txt > report.log
 
-            - name: Debug test_report.log
-              run: cat test_report.log
+            - name: Debug report.log
+              run: cat report.log
 
             - name: Prepare message
               run: |
@@ -88,21 +88,8 @@ jobs:
               run: |
                   curl -s -X POST \
                   -F "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
-                  -F "document=@test_report.log" \
+                  -F "document=@report.log" \
                   -F "caption=$(cat message.txt)" \
                   -F "parse_mode=Markdown" \
                   -F "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
                   "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendDocument"
-
-            # - name: Send telegram notify
-            #   run: |
-            #       curl -s -X POST \
-            #       -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
-            #       -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
-            #       -d "text=$(cat message.txt)" \
-            #       -d "parse_mode=Markdown" \
-            #       -o response.json \
-            #       "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
-
-            - name: Check response
-              run: cat response.json

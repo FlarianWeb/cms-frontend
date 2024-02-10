@@ -93,8 +93,4 @@ jobs:
                   -F "caption=$(cat message.txt)" \
                   -F "parse_mode=MarkdownV2" \
                   -F "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
-                  -o response.json \
                   "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendDocument"
-
-            - name: Check response
-              run: cat response.json

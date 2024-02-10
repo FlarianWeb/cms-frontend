@@ -62,7 +62,7 @@ jobs:
 
             - name: Concatenate reports
               run: |
-                  cat *.txt > report.txt
+                  cat *.txt > test_report.log
 
             - name: Debug report.txt
               run: cat report.txt
@@ -73,19 +73,12 @@ jobs:
                   repository="${{ github.repository }}"
                   commitUrl="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
 
-                  report=$(cat report.txt)
-                  report="${report//'%'/'%25'}"
-                  report="${report//$'\n'/'%0A'}"
-                  report="${report//$'\r'/'%0D'}"
-
                   message="
                   *Запрос на слияние*
                   *$repository*
 
                   *Автор:* $author
                   [Перейти к коммиту]($commitUrl)
-
-                  $report
                   "
 
                   echo "$message" > message.txt
@@ -93,12 +86,21 @@ jobs:
             - name: Send telegram notify
               run: |
                   curl -s -X POST \
-                  -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
-                  -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
-                  -d "text=$(cat message.txt)" \
-                  -d "parse_mode=Markdown" \
-                  -o response.json \
-                  "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
+                  -F "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
+                  -F "document=@test_report.log" \
+                  -F "caption=$(cat message.txt)" \
+                  -F "parse_mode=Markdown" \
+                  "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendDocument"
+
+            # - name: Send telegram notify
+            #   run: |
+            #       curl -s -X POST \
+            #       -d "chat_id=${{ secrets.TELEGRAM_NOTIFY_CHAT_ID }}" \
+            #       -d "message_thread_id=${{ secrets.TELEGRAM_NOTIFY_THEME_AUTOTEST }}" \
+            #       -d "text=$(cat message.txt)" \
+            #       -d "parse_mode=Markdown" \
+            #       -o response.json \
+            #       "https://api.telegram.org/bot${{ secrets.TELEGRAM_NOTIFY_TOKEN }}/sendMessage"
 
             - name: Check response
               run: cat response.json

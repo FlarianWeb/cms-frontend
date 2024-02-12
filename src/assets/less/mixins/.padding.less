@@ -1,0 +1,48 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	padding																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.padding(...) {
+	& when (length(@arguments) = 1) {
+		padding: extract(@arguments, 1);
+	}
+	& when (length(@arguments) = 2) {
+		padding: extract(@arguments, 1) extract(@arguments, 2);
+	}
+	& when (length(@arguments) = 3) {
+		padding: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3);
+	}
+	& when (length(@arguments) > 3) {
+		padding: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			extract(@arguments, 4);
+	}
+}
+
+.pa(@padding) {
+	padding: @padding;
+}
+
+.px(@padding) {
+	padding-left: @padding;
+	padding-right: @padding;
+}
+
+.py(@padding) {
+	padding-top: @padding;
+	padding-bottom: @padding;
+}
+
+.pt(@padding) {
+	padding-top: @padding;
+}
+
+.pl(@padding) {
+	padding-left: @padding;
+}
+
+.pr(@padding) {
+	padding-right: @padding;
+}
+
+.pb(@padding) {
+	padding-bottom: @padding;
+}

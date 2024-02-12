@@ -62,6 +62,7 @@ declare global {
   const useRoute: typeof import('vue-router/auto')['useRoute']
   const useRouter: typeof import('vue-router/auto')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
+  const useTheme: typeof import('../hooks/theme/useTheme')['useTheme']
   const useVuelidate: typeof import('@vuelidate/core')['useVuelidate']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']

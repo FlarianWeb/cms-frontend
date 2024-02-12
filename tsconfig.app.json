@@ -19,7 +19,7 @@
 			"~/*": ["src/*"],
 			"@/*": ["src/assets/*"]
 		},
-		"types": ["vite-plugin-vue-layouts/client"]
+		"types": ["jest", "vite-plugin-vue-layouts/client"]
 	},
 	"vueCompilerOptions": {
 		"plugins": ["@vue/language-plugin-pug"]

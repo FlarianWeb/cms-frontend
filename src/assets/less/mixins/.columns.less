@@ -1,0 +1,15 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	columns																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.columns(...) {
+	& when (length(@arguments) > 1) {
+		columns: extract(@arguments, 1);
+		column-gap: extract(@arguments, 2);
+	}
+	& when (length(@arguments) > 2) {
+		column-fill: extract(@arguments, 3);
+	}
+	& when (length(@arguments) > 3) {
+		column-rule: extract(@arguments, 4);
+	}
+}

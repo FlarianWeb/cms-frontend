@@ -1,0 +1,11 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	transform-origin (transform)											*/
+/* #################### - Developer Flarian Web - ######################### */
+.transform-origin(...) {
+	& when (length(@arguments) = 1) {
+		transform-origin: extract(@arguments, 1);
+	}
+	& when (length(@arguments) > 1) {
+		transform-origin: extract(@arguments, 1) extract(@arguments, 2);
+	}
+}

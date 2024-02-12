@@ -1,0 +1,14 @@
+/* touch action define */
+@default-touch-action: auto;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	touch-action															*/
+/* #################### - Developer Flarian Web - ######################### */
+.touch-action(...) {
+	& when (length(@arguments) = 0) {
+		touch-action: @default-touch-action;
+	}
+	& when (length(@arguments) > 0) {
+		touch-action: extract(@arguments, 1);
+	}
+}

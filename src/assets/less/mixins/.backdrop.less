@@ -1,0 +1,36 @@
+/* backdrop define */
+@default-backdrop-filter: blur;
+@default-backdrop-filter-value: 10px;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	backdrop																*/
+/* #################### - Developer Flarian Web - ######################### */
+.backdrop(...) {
+	@First: extract(@arguments, 1);
+	@Second: extract(@arguments, 2);
+	& when (length(@arguments) = 0) {
+		-webkit-backdrop-filter+_: ~'@{default-backdrop-filter}(@{default-backdrop-filter-value})';
+		backdrop-filter+_: ~'@{default-backdrop-filter}(@{default-backdrop-filter-value})';
+	}
+	& when (length(@arguments) = 1) {
+		@IsImg: replace('@{First}', '(url\((.*?)\)+)\,?(.*?)', 'TRUE', 'gi');
+		& when (@First = none) {
+			-webkit-backdrop-filter: unset;
+			backdrop-filter: unset;
+		}
+		& when not(@First = none) {
+			& when (@IsImg = 'TRUE') {
+				-webkit-backdrop-filter+_: @First;
+				backdrop-filter+_: @First;
+			}
+			& when not(@IsImg = 'TRUE') {
+				-webkit-backdrop-filter+_: ~'@{default-backdrop-filter}(@{First})';
+				backdrop-filter+_: ~'@{default-backdrop-filter}(@{First})';
+			}
+		}
+	}
+	& when (length(@arguments) = 2) {
+		-webkit-backdrop-filter+_: ~'@{First}(@{Second})';
+		backdrop-filter+_: ~'@{First}(@{Second})';
+	}
+}

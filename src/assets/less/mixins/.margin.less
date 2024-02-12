@@ -1,0 +1,48 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	margin																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.margin(...) {
+	& when (length(@arguments) = 1) {
+		margin: extract(@arguments, 1);
+	}
+	& when (length(@arguments) = 2) {
+		margin: extract(@arguments, 1) extract(@arguments, 2);
+	}
+	& when (length(@arguments) = 3) {
+		margin: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3);
+	}
+	& when (length(@arguments) > 3) {
+		margin: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			extract(@arguments, 4);
+	}
+}
+
+.ma(@margin) {
+	margin: @margin;
+}
+
+.mx(@margin) {
+	margin-left: @margin;
+	margin-right: @margin;
+}
+
+.my(@margin) {
+	margin-top: @margin;
+	margin-bottom: @margin;
+}
+
+.mt(@margin) {
+	margin-top: @margin;
+}
+
+.ml(@margin) {
+	margin-left: @margin;
+}
+
+.mr(@margin) {
+	margin-right: @margin;
+}
+
+.mb(@margin) {
+	margin-bottom: @margin;
+}

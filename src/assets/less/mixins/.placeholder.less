@@ -1,0 +1,72 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	Placeholder																*/
+/* #################### - Developer Flarian Web - ######################### */
+.placeholder-static(...) {
+	@attr: extract(@arguments, 1);
+	@value: extract(@arguments, 2);
+	& when (length(@arguments) = 2) {
+		&::-webkit-input-placeholder {
+			@{attr}: @value;
+		}
+		&:-moz-placeholder {
+			@{attr}: @value;
+		}
+		&::-moz-placeholder {
+			@attr: @value;
+		}
+		&:-ms-input-placeholder {
+			@{attr}: @value;
+		}
+	}
+}
+.placeholder-hover(...) {
+	@attr: extract(@arguments, 1);
+	@value: extract(@arguments, 2);
+	& when (length(@arguments) = 2) {
+		&:hover::-webkit-input-placeholder {
+			@{attr}: @value;
+		}
+		&:hover:-moz-placeholder {
+			@{attr}: @value;
+		}
+		&:hover::-moz-placeholder {
+			@{attr}: @value;
+		}
+		&:hover:-ms-input-placeholder {
+			@{attr}: @value;
+		}
+	}
+}
+.placeholder-focus(...) {
+	@attr: extract(@arguments, 1);
+	@value: extract(@arguments, 2);
+	& when (length(@arguments) = 2) {
+		&:focus::-webkit-input-placeholder {
+			@{attr}: @value;
+		}
+		&:focus:-moz-placeholder {
+			@{attr}: @value;
+		}
+		&:focus::-moz-placeholder {
+			@{attr}: @value;
+		}
+		&:focus:-ms-input-placeholder {
+			@{attr}: @value;
+		}
+	}
+}
+.placeholder(...) {
+	& when (length(@arguments) = 2) {
+		.placeholder-static((extract(@arguments, 1)); (extract(@arguments, 2)));
+	}
+	& when (length(@arguments) = 3) {
+		.placeholder-static((extract(@arguments, 1)); (extract(@arguments, 2)));
+		.placeholder-hover((extract(@arguments, 1)); (extract(@arguments, 3)));
+		.placeholder-focus((extract(@arguments, 1)); (extract(@arguments, 3)));
+	}
+	& when (length(@arguments) = 4) {
+		.placeholder-static((extract(@arguments, 1)); (extract(@arguments, 2)));
+		.placeholder-hover((extract(@arguments, 1)); (extract(@arguments, 3)));
+		.placeholder-focus((extract(@arguments, 1)); (extract(@arguments, 4)));
+	}
+}

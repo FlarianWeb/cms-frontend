@@ -1,0 +1,58 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	text																	*/
+/* #################### - Developer Flarian Web - ######################### */
+/*
+	.text(
+		color;
+		line-height font-size font-weight font-family;
+		text-align font-style;
+		text-transform text-decoration
+	);
+*/
+.text(...) {
+	& when (length(@arguments) > 0) {
+		@color: extract(@arguments, 1);
+		& when (not(@color = none)) {
+			color: @color;
+		}
+	}
+	& when (length(@arguments) > 1) {
+		@font: extract(@arguments, 2);
+		& when (not(@font = none)) {
+			& when (length(@font) > 0) {
+				line-height: extract(@font, 1);
+			}
+			& when (length(@font) > 1) {
+				font-size: extract(@font, 2);
+			}
+			& when (length(@font) > 2) {
+				font-weight: extract(@font, 3);
+			}
+			& when (length(@font) > 3) {
+				font-family: extract(@font, 4);
+			}
+		}
+	}
+	& when (length(@arguments) > 2) {
+		@style: extract(@arguments, 3);
+		& when (not(@style = none)) {
+			& when (length(@style) > 0) {
+				text-align: extract(@style, 1);
+			}
+			& when (length(@style) > 1) {
+				font-style: extract(@style, 2);
+			}
+		}
+	}
+	& when (length(@arguments) > 3) {
+		@decoration: extract(@arguments, 4);
+		& when (not(@decoration = none)) {
+			& when (length(@decoration) > 0) {
+				text-transform: extract(@decoration, 1);
+			}
+			& when (length(@decoration) > 1) {
+				text-decoration: extract(@decoration, 2);
+			}
+		}
+	}
+}

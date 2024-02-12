@@ -1,0 +1,17 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	text-overflow															*/
+/* #################### - Developer Flarian Web - ######################### */
+.text-overflow(...) {
+	& when (length(@arguments) = 0) {
+		white-space: nowrap;
+		word-wrap: normal;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	& when (length(@arguments) = 1) and (extract(@arguments, 1) = normal) {
+		white-space: normal;
+		word-wrap: normal;
+		overflow: auto;
+		text-overflow: clip;
+	}
+}

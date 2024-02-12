@@ -7,6 +7,8 @@ import Pages from 'unplugin-vue-router/vite';
 import Layouts from 'vite-plugin-vue-layouts';
 import { VueRouterAutoImports } from 'unplugin-vue-router';
 
+import { globalVars } from './vite.themes';
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
@@ -46,6 +48,14 @@ export default defineConfig({
 			collapseSamePrefixes: true,
 		}),
 	],
+
+	css: {
+		preprocessorOptions: {
+			less: {
+				globalVars,
+			},
+		},
+	},
 
 	resolve: {
 		alias: {

@@ -1,0 +1,40 @@
+/* box-shadow define */
+@default-box-shadow-x: 0;
+@default-box-shadow-y: 0;
+@default-box-shadow-blur: 0;
+@default-box-shadow-indent: 0;
+@default-box-shadow-color: transparent;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	box-shadow																*/
+/* #################### - Developer Flarian Web - ######################### */
+.box-shadow(...) {
+	& when (length(@arguments) = 0) {
+		box-shadow+: @default-box-shadow-x @default-box-shadow-y @default-box-shadow-blur
+			@default-box-shadow-indent @default-box-shadow-color;
+	}
+	& when (length(@arguments) = 1) {
+		box-shadow+: extract(@arguments, 1) @default-box-shadow-y @default-box-shadow-blur
+			@default-box-shadow-indent @default-box-shadow-color;
+	}
+	& when (length(@arguments) = 2) {
+		box-shadow+: extract(@arguments, 1) extract(@arguments, 2) @default-box-shadow-blur
+			@default-box-shadow-indent @default-box-shadow-color;
+	}
+	& when (length(@arguments) = 3) {
+		box-shadow+: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			@default-box-shadow-indent @default-box-shadow-color;
+	}
+	& when (length(@arguments) = 4) {
+		box-shadow+: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			extract(@arguments, 4) @default-box-shadow-color;
+	}
+	& when (length(@arguments) = 5) {
+		box-shadow+: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			extract(@arguments, 4) extract(@arguments, 5);
+	}
+	& when (length(@arguments) = 6) {
+		box-shadow+: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			extract(@arguments, 4) extract(@arguments, 5) extract(@arguments, 6);
+	}
+}

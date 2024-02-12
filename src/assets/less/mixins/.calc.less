@@ -1,0 +1,10 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	calc																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.calc(...) {
+	@attr: extract(@arguments, 1);
+	@value: extract(@arguments, 2);
+	& when (length(@arguments) = 2) {
+		@{attr}: calc(@value);
+	}
+}

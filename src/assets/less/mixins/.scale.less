@@ -1,0 +1,23 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	scaleX scaleY scale	(transform)											*/
+/* #################### - Developer Flarian Web - ######################### */
+.scaleX(...) {
+	& when (length(@arguments) > 0) {
+		transform+_: scaleX(extract(@arguments, 1));
+	}
+}
+
+.scaleY(...) {
+	& when (length(@arguments) > 0) {
+		transform+_: scaleY(extract(@arguments, 1));
+	}
+}
+
+.scale(...) {
+	& when (length(@arguments) = 1) {
+		transform+_: scale(extract(@arguments, 1));
+	}
+	& when (length(@arguments) > 1) {
+		transform+_: scale(extract(@arguments, 1), extract(@arguments, 2));
+	}
+}

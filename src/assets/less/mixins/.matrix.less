@@ -1,0 +1,15 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	matrix	(transform)														*/
+/* #################### - Developer Flarian Web - ######################### */
+.matrix(...) {
+	& when (length(@arguments) > 5) {
+		transform+_: matrix(
+			extract(@arguments, 1),
+			extract(@arguments, 2),
+			extract(@arguments, 3),
+			extract(@arguments, 4),
+			extract(@arguments, 5),
+			extract(@arguments, 6)
+		);
+	}
+}

@@ -1,0 +1,22 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	outline																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.outline(...) {
+	& when (length(@arguments) > 0) {
+		@outline: extract(@arguments, 1);
+		& when (not(@outline = none)) {
+			& when (length(@outline) = 1) {
+				outline: extract(@outline, 1);
+			}
+			& when (length(@outline) = 2) {
+				outline: extract(@outline, 1) extract(@outline, 2);
+			}
+			& when (length(@outline) > 2) {
+				outline: extract(@outline, 1) extract(@outline, 2) extract(@outline, 3);
+			}
+		}
+	}
+	& when (length(@arguments) > 1) {
+		outline-offset: extract(@arguments, 2);
+	}
+}

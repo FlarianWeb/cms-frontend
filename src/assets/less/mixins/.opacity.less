@@ -1,0 +1,17 @@
+/* opacity define */
+@default-opacity: 1;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	opacity																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.opacity(...) {
+	& when (length(@arguments) = 0) {
+		opacity: @default-opacity;
+	}
+	& when (length(@arguments) = 1) {
+		opacity: extract(@arguments, 1);
+	}
+	& when (length(@arguments) > 1) {
+		opacity: @default-opacity;
+	}
+}

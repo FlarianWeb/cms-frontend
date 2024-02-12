@@ -1,0 +1,18 @@
+/* appearance define */
+@default-appearance: none;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	appearance																*/
+/* #################### - Developer Flarian Web - ######################### */
+.appearance(...) {
+	& when (length(@arguments) = 0) {
+		-webkit-appearance: @default-appearance;
+		-moz-appearance: @default-appearance;
+		appearance: @default-appearance;
+	}
+	& when (length(@arguments) > 0) {
+		-webkit-appearance: extract(@arguments, 1);
+		-moz-appearance: extract(@arguments, 1);
+		appearance: extract(@arguments, 1);
+	}
+}

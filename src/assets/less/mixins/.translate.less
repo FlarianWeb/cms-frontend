@@ -1,0 +1,33 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	translateX translateY translateZ translate	(transform)					*/
+/* #################### - Developer Flarian Web - ######################### */
+.translateX(...) {
+	& when (length(@arguments) > 0) {
+		transform+_: translateX(extract(@arguments, 1));
+	}
+}
+.translateY(...) {
+	& when (length(@arguments) > 0) {
+		transform+_: translateY(extract(@arguments, 1));
+	}
+}
+.translateZ(...) {
+	& when (length(@arguments) > 0) {
+		transform+_: translateZ(extract(@arguments, 1));
+	}
+}
+.translate(...) {
+	& when (length(@arguments) = 1) {
+		transform+_: translate(extract(@arguments, 1));
+	}
+	& when (length(@arguments) = 2) {
+		transform+_: translate(extract(@arguments, 1), extract(@arguments, 2));
+	}
+	& when (length(@arguments) > 2) {
+		transform+_: translate(
+			extract(@arguments, 1),
+			extract(@arguments, 2),
+			extract(@arguments, 3)
+		);
+	}
+}

@@ -1,0 +1,14 @@
+/* perspective define */
+@default-perspective: 0;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	perspective (transform)													*/
+/* #################### - Developer Flarian Web - ######################### */
+.perspective(...) {
+	& when (length(@arguments) = 1) {
+		transform+_: perspective(extract(@arguments, 1));
+	}
+	& when (not(length(@arguments) = 1)) {
+		transform+_: perspective(@default-perspective);
+	}
+}

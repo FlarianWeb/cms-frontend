@@ -50,7 +50,8 @@
 		"**/node_modules": true,
 		"**/.DS_Store": true,
 		"**/*.xyz": true,
-		"**/*.tsbuildinfo": true
+		"**/*.tsbuildinfo": true,
+		"**/*.github": true
 	},
 
 	// language settings

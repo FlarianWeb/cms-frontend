@@ -1,0 +1,31 @@
+/* text-shadow define */
+@default-text-shadow-x: 0.5rem;
+@default-text-shadow-y: 0.5rem;
+@default-text-shadow-blur: 1rem;
+@default-text-shadow-color: black;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	text-shadow																*/
+/* #################### - Developer Flarian Web - ######################### */
+.text-shadow(...) {
+	& when (length(@arguments) = 0) {
+		text-shadow+: @default-text-shadow-x @default-text-shadow-y @default-text-shadow-blur
+			@default-text-shadow-color;
+	}
+	& when (length(@arguments) = 1) {
+		text-shadow+: extract(@arguments, 1) @default-text-shadow-y @default-text-shadow-blur
+			@default-text-shadow-color;
+	}
+	& when (length(@arguments) = 2) {
+		text-shadow+: extract(@arguments, 1) extract(@arguments, 2) @default-text-shadow-blur
+			@default-text-shadow-color;
+	}
+	& when (length(@arguments) = 3) {
+		text-shadow+: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			@default-text-shadow-color;
+	}
+	& when (length(@arguments) > 3) {
+		text-shadow+: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			extract(@arguments, 4);
+	}
+}

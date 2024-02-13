@@ -1,8 +1,12 @@
 @charset 'utf-8';
 
+@import (less) '@/less/mixins.less';
+
 /* #################### - Developer Flarian Web - ######################### */
 /*	Main stylesheets														*/
 /* #################### - Developer Flarian Web - ######################### */
 body {
-	font-family: Inter, sans-serif;
+	min-height: 100vh;
+	.text(@colorText; @lineHeight @fontSize @fontWeight @fontFamily);
+	.background(@colorBg);
 }

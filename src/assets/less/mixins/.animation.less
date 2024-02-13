@@ -1,0 +1,217 @@
+/* animation define */
+@default-animation-duration: 1000ms;
+@default-animation-timing-function: linear;
+@default-animation-delay: 0ms;
+@default-animation-iteration-count: initial;
+@default-animation-direction: initial;
+@default-animation-fill-mode: initial;
+@default-animation-play-state: initial;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	animation																*/
+/* #################### - Developer Flarian Web - ######################### */
+.animation(...) {
+	& when ((length(@arguments) = 1) and (extract(@arguments, 1) = none)) {
+		animation: none;
+	}
+	& when ((length(@arguments) = 1) and not(extract(@arguments, 1) = none)) {
+		animation-name: extract(@arguments, 1);
+		animation-duration: @default-animation-duration;
+		animation-timing-function: @default-animation-timing-function;
+		animation-delay: @default-animation-delay;
+		animation-iteration-count: @default-animation-iteration-count;
+		animation-direction: @default-animation-direction;
+		animation-fill-mode: @default-animation-fill-mode;
+		animation-play-state: @default-animation-play-state;
+	}
+	& when (length(@arguments) = 2) {
+		animation-name: extract(@arguments, 1);
+		animation-duration: extract(@arguments, 2);
+		animation-timing-function: @default-animation-timing-function;
+		animation-delay: @default-animation-delay;
+		animation-iteration-count: @default-animation-iteration-count;
+		animation-direction: @default-animation-direction;
+		animation-fill-mode: @default-animation-fill-mode;
+		animation-play-state: @default-animation-play-state;
+	}
+	& when (length(@arguments) = 3) {
+		@ruleFind: extract(@arguments, 3);
+		@ruleSet: replace('@{ruleFind}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{ruleFind}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@isRuleSet: replace('@{easing-names}', "(.*)'(@{ruleFind})'(.*)", '$2', 'gi');
+
+		animation-name: extract(@arguments, 1);
+		animation-duration: extract(@arguments, 2);
+
+		& when (~'@{timing}' = cubic-bezier) {
+			animation-timing-function: @ruleFind;
+		}
+		& when (~'@{isRuleSet}' = ~'@{ruleFind}') {
+			animation-timing-function: ~'@{ruleSet}';
+		}
+		& when (not(~'@{timing}' = cubic-bezier)) and (not(~'@{isRuleSet}' = ~'@{ruleFind}')) {
+			animation-timing-function: @default-animation-timing-function;
+		}
+
+		animation-delay: @default-animation-delay;
+		animation-iteration-count: @default-animation-iteration-count;
+		animation-direction: @default-animation-direction;
+		animation-fill-mode: @default-animation-fill-mode;
+		animation-play-state: @default-animation-play-state;
+	}
+	& when (length(@arguments) = 4) {
+		@ruleFind: extract(@arguments, 3);
+		@ruleSet: replace('@{ruleFind}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{ruleFind}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@isRuleSet: replace('@{easing-names}', "(.*)'(@{ruleFind})'(.*)", '$2', 'gi');
+
+		animation-name: extract(@arguments, 1);
+		animation-duration: extract(@arguments, 2);
+
+		& when (~'@{timing}' = cubic-bezier) {
+			animation-timing-function: @ruleFind;
+		}
+		& when (~'@{isRuleSet}' = ~'@{ruleFind}') {
+			animation-timing-function: ~'@{ruleSet}';
+		}
+		& when (not(~'@{timing}' = cubic-bezier)) and (not(~'@{isRuleSet}' = ~'@{ruleFind}')) {
+			animation-timing-function: @default-animation-timing-function;
+		}
+
+		animation-delay: extract(@arguments, 4);
+		animation-iteration-count: @default-animation-iteration-count;
+		animation-direction: @default-animation-direction;
+		animation-fill-mode: @default-animation-fill-mode;
+		animation-play-state: @default-animation-play-state;
+	}
+	& when (length(@arguments) = 5) {
+		@ruleFind: extract(@arguments, 3);
+		@ruleSet: replace('@{ruleFind}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{ruleFind}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@isRuleSet: replace('@{easing-names}', "(.*)'(@{ruleFind})'(.*)", '$2', 'gi');
+
+		animation-name: extract(@arguments, 1);
+		animation-duration: extract(@arguments, 2);
+
+		& when (~'@{timing}' = cubic-bezier) {
+			animation-timing-function: @ruleFind;
+		}
+		& when (~'@{isRuleSet}' = ~'@{ruleFind}') {
+			animation-timing-function: ~'@{ruleSet}';
+		}
+		& when (not(~'@{timing}' = cubic-bezier)) and (not(~'@{isRuleSet}' = ~'@{ruleFind}')) {
+			animation-timing-function: @default-animation-timing-function;
+		}
+
+		animation-delay: extract(@arguments, 4);
+		animation-iteration-count: extract(@arguments, 5);
+		animation-direction: @default-animation-direction;
+		animation-fill-mode: @default-animation-fill-mode;
+		animation-play-state: @default-animation-play-state;
+	}
+	& when (length(@arguments) = 6) {
+		@ruleFind: extract(@arguments, 3);
+		@ruleSet: replace('@{ruleFind}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{ruleFind}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@isRuleSet: replace('@{easing-names}', "(.*)'(@{ruleFind})'(.*)", '$2', 'gi');
+
+		animation-name: extract(@arguments, 1);
+		animation-duration: extract(@arguments, 2);
+
+		& when (~'@{timing}' = cubic-bezier) {
+			animation-timing-function: @ruleFind;
+		}
+		& when (~'@{isRuleSet}' = ~'@{ruleFind}') {
+			animation-timing-function: ~'@{ruleSet}';
+		}
+		& when (not(~'@{timing}' = cubic-bezier)) and (not(~'@{isRuleSet}' = ~'@{ruleFind}')) {
+			animation-timing-function: @default-animation-timing-function;
+		}
+
+		animation-delay: extract(@arguments, 4);
+		animation-iteration-count: extract(@arguments, 5);
+		animation-direction: extract(@arguments, 6);
+		animation-fill-mode: @default-animation-fill-mode;
+		animation-play-state: @default-animation-play-state;
+	}
+	& when (length(@arguments) = 7) {
+		@ruleFind: extract(@arguments, 3);
+		@ruleSet: replace('@{ruleFind}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{ruleFind}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@isRuleSet: replace('@{easing-names}', "(.*)'(@{ruleFind})'(.*)", '$2', 'gi');
+
+		animation-name: extract(@arguments, 1);
+		animation-duration: extract(@arguments, 2);
+
+		& when (~'@{timing}' = cubic-bezier) {
+			animation-timing-function: @ruleFind;
+		}
+		& when (~'@{isRuleSet}' = ~'@{ruleFind}') {
+			animation-timing-function: ~'@{ruleSet}';
+		}
+		& when (not(~'@{timing}' = cubic-bezier)) and (not(~'@{isRuleSet}' = ~'@{ruleFind}')) {
+			animation-timing-function: @default-animation-timing-function;
+		}
+
+		animation-delay: extract(@arguments, 4);
+		animation-iteration-count: extract(@arguments, 5);
+		animation-direction: extract(@arguments, 6);
+		animation-fill-mode: extract(@arguments, 7);
+		animation-play-state: @default-animation-play-state;
+	}
+	& when (length(@arguments) = 8) {
+		@ruleFind: extract(@arguments, 3);
+		@ruleSet: replace('@{ruleFind}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{ruleFind}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@isRuleSet: replace('@{easing-names}', "(.*)'(@{ruleFind})'(.*)", '$2', 'gi');
+
+		animation-name: extract(@arguments, 1);
+		animation-duration: extract(@arguments, 2);
+
+		& when (~'@{timing}' = cubic-bezier) {
+			animation-timing-function: @ruleFind;
+		}
+		& when (~'@{isRuleSet}' = ~'@{ruleFind}') {
+			animation-timing-function: ~'@{ruleSet}';
+		}
+		& when (not(~'@{timing}' = cubic-bezier)) and (not(~'@{isRuleSet}' = ~'@{ruleFind}')) {
+			animation-timing-function: @default-animation-timing-function;
+		}
+
+		animation-delay: extract(@arguments, 4);
+		animation-iteration-count: extract(@arguments, 5);
+		animation-direction: extract(@arguments, 6);
+		animation-fill-mode: extract(@arguments, 7);
+		animation-play-state: extract(@arguments, 8);
+	}
+}

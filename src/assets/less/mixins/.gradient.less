@@ -1,0 +1,272 @@
+/* gradient define */
+@default-gradient-repeating-size: 1px;
+@default-gradient-radial-position: center;
+@default-gradient-radial-type: ellipse;
+
+@default-gradient-bg-position: 0% 0%;
+@default-gradient-bg-repeat: repeat;
+@default-gradient-bg-size: auto;
+@default-gradient-bg-attachment: scroll;
+@default-gradient-bg-clip: border-box;
+@default-gradient-bg-origin: padding-box;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	gradient																*/
+/* #################### - Developer Flarian Web - ######################### */
+.gradient(@firstArg; @rest ...) {
+	& when (length(@arguments) > 1) {
+		@second-arg: extract(@arguments, 2);
+		@third-arg: extract(@arguments, 3);
+		@fourth-arg: extract(@arguments, 4);
+		@last-arg: extract(extract(@arguments, length(@arguments)), 1);
+		@rest-without-img: replace('@{rest}', '(img\(url\(.*?\).*?\))', '', 'gi');
+		@rest-part: replace(
+			'@{rest-without-img}',
+			'((((rgb|rgba|hsl)\(.*?\))|(\#[a-fA-F0-9]{3,6})|([a-zA-Z]{3,}))([\s][\d]{1,3}\%)?)',
+			'$1,',
+			'gi'
+		);
+		@gradient: replace('@{rest-part}', '(\,[\s]*)$', ' ', 'gi');
+		@find-colors: replace('@{gradient}', '(img+\((url\((.*?)\)+)\,?(.*?)\))', '', 'gi');
+		@is-img: replace('@{last-arg}', '(img+\((url\((.*?)\)+)\,?(.*?)\))', 'TRUE', 'gi');
+		@find-bg: replace('@{last-arg}', 'img+\((url\((.*?)\)+)\,?(.*?)\)', '$1', 'gi');
+		@bg-arg: replace('@{last-arg}', 'img+\((url\((.*?)\)+)\,?(.*?)\)', '$3', 'gi');
+		@bg-position: replace(
+			'@{bg-arg}',
+			'([^,]+)\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?',
+			'$1',
+			'gi'
+		);
+		@bg-repeat: replace(
+			'@{bg-arg}',
+			'([^,]+)\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?',
+			'$2',
+			'gi'
+		);
+		@bg-size: replace(
+			'@{bg-arg}',
+			'([^,]+)\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?',
+			'$3',
+			'gi'
+		);
+		@bg-attachment: replace(
+			'@{bg-arg}',
+			'([^,]+)\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?',
+			'$4',
+			'gi'
+		);
+		@bg-clip: replace(
+			'@{bg-arg}',
+			'([^,]+)\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?',
+			'$5',
+			'gi'
+		);
+		@bg-origin: replace(
+			'@{bg-arg}',
+			'([^,]+)\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?\,?([^,]+)?',
+			'$6',
+			'gi'
+		);
+		@bg-img: (~'@{find-bg}');
+		@find-radial-part: extract(extract(@firstArg, length(@firstArg)), 1);
+		@find-radial-position: replace('@{find-radial-part}', '([^, ]+)[, ]?([^, ]+)?', '$1', 'gi');
+		@find-radial-type: replace('@{find-radial-part}', '([^, ]+)[, ]?([^, ]+)?', '$2', 'gi');
+		@radial-position: ~'@{find-radial-position}';
+		@radial-type: ~'@{find-radial-type}';
+
+		& when (length(@arguments) = 2) {
+			& when (iscolor(@firstArg)) and (iscolor(@second-arg)) {
+				background-image: linear-gradient(0deg, @firstArg 0%, @second-arg 100%);
+			}
+			&
+				when
+				(iscolor(extract(@firstArg, 1)))
+				and
+				(isnumber(extract(@firstArg, 2)))
+				and
+				(iscolor(extract(@second-arg, 1)))
+				and
+				(isnumber(extract(@second-arg, 2))) {
+				background-image: linear-gradient(
+					0deg,
+					extract(@firstArg, 1) extract(@firstArg, 2),
+					extract(@second-arg, 1) extract(@second-arg, 2)
+				);
+			}
+			& when (iscolor(@firstArg)) and (@is-img = 'TRUE') {
+				background-image: linear-gradient(0deg, @firstArg 0%, @firstArg 100%), @bg-img;
+			}
+			&
+				when
+				(iscolor(extract(@firstArg, 1)))
+				and
+				(isnumber(extract(@firstArg, 2)))
+				and
+				(@is-img = 'TRUE') {
+				background-image: linear-gradient(
+						0deg,
+						extract(@firstArg, 1) 0%,
+						extract(@firstArg, 1) 100%
+					),
+					@bg-img;
+			}
+		}
+		& when (length(@arguments) > 2) {
+			& when ((iscolor(extract(@firstArg, 1))) and (isnumber(extract(@firstArg, 2)))), (iscolor(@firstArg)) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: linear-gradient(0deg, ~'@{firstArg}, @{find-colors}');
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: linear-gradient(0deg, ~'@{firstArg}, @{find-colors}'), @bg-img;
+				}
+			}
+			& when (isnumber(@firstArg)) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: linear-gradient(@firstArg * 1deg, ~'@{find-colors}');
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: linear-gradient(@firstArg * 1deg, ~'@{find-colors}'), @bg-img;
+				}
+			}
+			& when (isnumber(extract(@firstArg, 1))) and (extract(@firstArg, 2) = repeating) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: repeating-linear-gradient(
+						extract(@firstArg, 1) * 1deg,
+						~'@{find-colors}'
+					);
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: repeating-linear-gradient(
+							extract(@firstArg, 1) * 1deg,
+							~'@{find-colors}'
+						),
+						@bg-img;
+				}
+			}
+			& when (@firstArg = repeating) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: repeating-linear-gradient(0deg, ~'@{find-colors}');
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: repeating-linear-gradient(0deg, ~'@{find-colors}'), @bg-img;
+				}
+			}
+			& when (@firstArg = radial) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: radial-gradient(
+						@default-gradient-radial-type at @default-gradient-radial-position,
+						~'@{find-colors}'
+					);
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: radial-gradient(
+							@default-gradient-radial-type at @default-gradient-radial-position,
+							~'@{find-colors}'
+						),
+						@bg-img;
+				}
+			}
+			&
+				when
+				(extract(@firstArg, 1) = radial)
+				and
+				(not(extract(@firstArg, 2) = repeating))
+				and
+				(isstring(@find-radial-part)) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: radial-gradient(
+						@radial-type at @radial-position,
+						~'@{find-colors}'
+					);
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: radial-gradient(
+							@radial-type at @radial-position,
+							~'@{find-colors}'
+						),
+						@bg-img;
+				}
+			}
+			&
+				when
+				(extract(@firstArg, 1) = radial)
+				and
+				(extract(@firstArg, 2) = repeating)
+				and
+				(not(isstring(@find-radial-part))) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: repeating-radial-gradient(
+						@default-gradient-radial-type at @default-gradient-radial-position,
+						~'@{find-colors}'
+					);
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: repeating-radial-gradient(
+							@default-gradient-radial-type at @default-gradient-radial-position,
+							~'@{find-colors}'
+						),
+						@bg-img;
+				}
+			}
+			&
+				when
+				(extract(@firstArg, 1) = radial)
+				and
+				(extract(@firstArg, 2) = repeating)
+				and
+				(isstring(@find-radial-part)) {
+				& when (not(@is-img = 'TRUE')) {
+					background-image: repeating-radial-gradient(
+						@radial-type at @radial-position,
+						~'@{find-colors}'
+					);
+				}
+				& when (@is-img = 'TRUE') {
+					background-image: repeating-radial-gradient(
+							@radial-type at @radial-position,
+							~'@{find-colors}'
+						),
+						@bg-img;
+				}
+			}
+		}
+		& when (@is-img = 'TRUE') {
+			& when (@bg-position = '') {
+				background-position: @default-gradient-bg-position;
+			}
+			& when (not(@bg-position = '')) {
+				background-position: ~'@{bg-position}';
+			}
+			& when (@bg-repeat = '') {
+				background-repeat: @default-gradient-bg-repeat;
+			}
+			& when (not(@bg-repeat = '')) {
+				background-repeat: ~'@{bg-repeat}';
+			}
+			& when (@bg-size = '') {
+				background-size: @default-gradient-bg-size;
+			}
+			& when (not(@bg-size = '')) {
+				background-size: ~'@{bg-size}';
+			}
+			& when (@bg-attachment = '') {
+				background-attachment: @default-gradient-bg-attachment;
+			}
+			& when (not(@bg-attachment = '')) {
+				background-attachment: ~'@{bg-attachment}';
+			}
+			& when (@bg-clip = '') {
+				background-clip: @default-gradient-bg-clip;
+			}
+			& when (not(@bg-clip = '')) {
+				background-clip: ~'@{bg-clip}';
+			}
+			& when (@bg-origin = '') {
+				background-origin: @default-gradient-bg-origin;
+			}
+			& when (not(@bg-origin = '')) {
+				background-origin: ~'@{bg-origin}';
+			}
+		}
+	}
+}

@@ -1,0 +1,57 @@
+/* theme define */
+@default-global-theme: extract(@globalThemes, 1);
+@default-global-mode: extract(@globalModes, 1);
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	Theme builder															*/
+/* #################### - Developer Flarian Web - ######################### */
+.themeConstructor(@theme; @mode; @colorType; @colorTone) {
+	& when (@theme = @default-global-theme) {
+		& when (@mode = @default-global-mode) {
+			html:root {
+				--color-@{colorType}-@{colorTone}: ~'@{@{theme}-@{mode}-@{colorType}-@{colorTone}}';
+			}
+		}
+		& when not(@mode = @default-global-mode) {
+			html[mode='@{mode}']:root {
+				--color-@{colorType}-@{colorTone}: ~'@{@{theme}-@{mode}-@{colorType}-@{colorTone}}';
+			}
+		}
+	}
+	& when not(@theme = @default-global-theme) {
+		html[theme='@{theme}'][mode='@{mode}']:root {
+			--color-@{colorType}-@{colorTone}: ~'@{@{theme}-@{mode}-@{colorType}-@{colorTone}}';
+		}
+	}
+}
+.themeBuilder(@n:1) when (@n <= length(@globalThemes)) {
+	.-eachTheme(extract(@globalThemes, @n));
+	.themeBuilder(@n+1);
+}
+.modeBuilder(@n:1) when (@n <= length(@globalModes)) {
+	.-eachMode(extract(@globalModes, @n));
+	.modeBuilder(@n+1);
+}
+.colorTypeBuilder(@n:1) when (@n <= length(@globalColorTypes)) {
+	.-eachColorType(extract(@globalColorTypes, @n));
+	.colorTypeBuilder(@n+1);
+}
+.colorToneBuilder(@n:1) when (@n <= length(@globalColorTones)) {
+	.-eachColorTone(extract(@globalColorTones, @n));
+	.colorToneBuilder(@n+1);
+}
+
+.themeBuilder();
+.modeBuilder();
+.colorTypeBuilder();
+.colorToneBuilder();
+
+.-eachTheme(@theme) {
+	.-eachMode(@mode) {
+		.-eachColorType(@colorType) {
+			.-eachColorTone(@colorTone) {
+				.themeConstructor(@theme; @mode; @colorType; @colorTone);
+			}
+		}
+	}
+}

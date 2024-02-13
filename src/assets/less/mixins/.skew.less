@@ -1,0 +1,23 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	skewX skewY skew (transform)											*/
+/* #################### - Developer Flarian Web - ######################### */
+.skewX(...) {
+	& when (length(@arguments) > 0) {
+		transform+_: skewX(extract(@arguments, 1) * 1deg);
+	}
+}
+
+.skewY(...) {
+	& when (length(@arguments) > 0) {
+		transform+_: skewY(extract(@arguments, 1) * 1deg);
+	}
+}
+
+.skew(...) {
+	& when (length(@arguments) = 1) {
+		transform+_: skew(extract(@arguments, 1) * 1deg);
+	}
+	& when (length(@arguments) > 1) {
+		transform+_: skew(extract(@arguments, 1) * 1deg, extract(@arguments, 2) * 1deg);
+	}
+}

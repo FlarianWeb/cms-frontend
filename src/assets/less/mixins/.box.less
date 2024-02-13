@@ -1,0 +1,492 @@
+/* box-sizing define */
+@default-box-sizing: border-box;
+
+/* flexbox define */
+@default-flexbox-align-items: flex-start;
+@default-flexbox-justify-content: flex-start;
+@default-flexbox-align-content: flex-start;
+@default-flexbox-wrap: nowrap;
+@default-flexbox-direction: row;
+@default-flex-grow: 1;
+@default-flex-shrink: 1;
+@default-flex-basis: auto;
+@default-flex-order: 0;
+
+/* grid define */
+@default-grid-gap: 0;
+@default-grid-tpl-row: auto;
+@default-grid-tpl-col: auto;
+@default-grid-tpl-align: normal;
+@default-grid-tpl-justify: normal;
+@default-grid-tpl-flow: unset;
+@default-grid-tpl-area: none;
+
+@default-grid-row-start: auto;
+@default-grid-row-end: auto;
+@default-grid-col-start: auto;
+@default-grid-col-end: auto;
+@default-grid-align: unset;
+@default-grid-justify: unset;
+@default-grid-aspect: 1;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	box-sizing																*/
+/* #################### - Developer Flarian Web - ######################### */
+.box-sizing(...) {
+	& when (length(@arguments) = 0) {
+		box-sizing: @default-box-sizing;
+	}
+	& when (length(@arguments) > 0) {
+		box-sizing: extract(@arguments, 1);
+	}
+}
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	flexbox																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.flexbox(...) {
+	& when (length(@arguments) > 0) {
+		& when (extract(@arguments, 1) = flex), (extract(@arguments, 1) = inline-flex), (extract(@arguments, 1) = skip-display) {
+			& when (not(extract(@arguments, 1) = skip-display)) {
+				display: extract(@arguments, 1);
+			}
+
+			& when (length(@arguments) > 1) {
+				.flexbox-align(extract(@arguments, 2));
+			}
+			& when (length(@arguments) > 2) {
+				.flexbox-justify-content(extract(@arguments, 3));
+			}
+			& when (length(@arguments) > 3) {
+				.flexbox-align-content(extract(@arguments, 4));
+			}
+			& when (length(@arguments) > 4) {
+				.flexbox-flow(extract(@arguments, 5));
+			}
+		}
+		&
+			when
+			(not(extract(@arguments, 1) = flex))
+			and
+			(not(extract(@arguments, 1) = inline-flex))
+			and
+			(not(extract(@arguments, 1) = skip-display)) {
+			display: flex;
+			& when (length(@arguments) > 0) {
+				.flexbox-align(extract(@arguments, 1));
+			}
+			& when (length(@arguments) > 1) {
+				.flexbox-justify-content(extract(@arguments, 2));
+			}
+			& when (length(@arguments) > 2) {
+				.flexbox-align-content(extract(@arguments, 3));
+			}
+			& when (length(@arguments) > 3) {
+				.flexbox-flow(extract(@arguments, 4));
+			}
+		}
+		.box-sizing();
+	}
+}
+.flexbox-align(...) {
+	& when (length(@arguments) = 0) {
+		align-items: @default-flexbox-align-items;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		align-items: @arguments;
+	}
+}
+.flexbox-justify-content(...) {
+	& when (length(@arguments) = 0) {
+		justify-content: @default-flexbox-justify-content;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		justify-content: @arguments;
+	}
+}
+.flexbox-align-content(...) {
+	& when (length(@arguments) = 0) {
+		align-content: @default-flexbox-align-content;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		align-content: @arguments;
+	}
+}
+.flexbox-flow(...) {
+	& when (length(@arguments) = 0) {
+		flex-flow: @default-flexbox-wrap @default-flexbox-direction;
+	}
+	& when (length(@arguments) = 1) {
+		flex-flow: extract(@arguments, 1) @default-flexbox-direction;
+	}
+	& when (length(@arguments) > 1) {
+		flex-flow: extract(@arguments, 1) extract(@arguments, 2);
+	}
+}
+.flex(...) {
+	& when (length(@arguments) = 0) {
+		flex: @default-flex-grow @default-flex-shrink @default-flex-basis;
+	}
+	& when (length(@arguments) = 1) {
+		flex: extract(@arguments, 1) @default-flex-shrink @default-flex-basis;
+	}
+	& when (length(@arguments) = 2) {
+		flex: extract(@arguments, 1) extract(@arguments, 2) @default-flex-basis;
+	}
+	& when (length(@arguments) > 2) {
+		flex: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3);
+	}
+}
+.flex-num(...) {
+	& when (length(@arguments) = 0) {
+		order: @default-flex-order;
+	}
+	& when (length(@arguments) > 0) {
+		order: extract(@arguments, 1);
+	}
+}
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	grid																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.gridbox-gap(...) {
+	& when (length(@arguments) = 0) {
+		gap: @default-grid-gap;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		gap: @arguments;
+	}
+}
+.gridbox-row(...) {
+	& when (length(@arguments) = 0) {
+		grid-template-rows: @default-grid-tpl-row;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		grid-template-rows: @arguments;
+	}
+}
+.gridbox-col(...) {
+	& when (length(@arguments) = 0) {
+		grid-template-columns: @default-grid-tpl-col;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		grid-template-columns: @arguments;
+	}
+}
+.gridbox-align(...) {
+	& when (length(@arguments) = 0) {
+		align-items: @default-grid-tpl-align;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		align-items: @arguments;
+	}
+}
+.gridbox-justify(...) {
+	& when (length(@arguments) = 0) {
+		justify-items: @default-grid-tpl-justify;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		justify-items: @arguments;
+	}
+}
+.gridbox-flow(...) {
+	& when (length(@arguments) = 0) {
+		grid-auto-flow: @default-grid-tpl-flow;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) {
+		grid-auto-flow: @arguments;
+	}
+}
+.gridbox-area(...) {
+	& when (length(@arguments) = 0) {
+		grid-template-areas: @default-grid-tpl-area;
+	}
+	& when (length(@arguments) > 0) and (not(@arguments = unset)) and (not(@arguments = none)) {
+		grid-template-areas+_: @arguments;
+	}
+	& when (length(@arguments) > 0) and (@arguments = none) {
+		grid-template-areas: @arguments;
+	}
+}
+.gridbox(...) {
+	& when (length(@arguments) > 0) {
+		& when (extract(@arguments, 1) = grid), (extract(@arguments, 1) = inline-grid), (extract(@arguments, 1) = skip-display) {
+			& when (not(extract(@arguments, 1) = skip-display)) {
+				display: extract(@arguments, 1);
+			}
+			& when (length(@arguments) > 1) {
+				.gridbox-gap(extract(@arguments, 2));
+			}
+			& when (length(@arguments) > 2) {
+				& when (not(extract(@arguments, 3) = area)) {
+					.gridbox-row(extract(@arguments, 3));
+				}
+			}
+			& when (length(@arguments) > 3) {
+				& when (not(extract(@arguments, 3) = area)) {
+					.gridbox-col(extract(@arguments, 4));
+				}
+				& when (extract(@arguments, 3) = area) {
+					.gridbox-area(extract(@arguments, 4));
+				}
+			}
+			& when (length(@arguments) > 4) {
+				.gridbox-align(extract(@arguments, 5));
+			}
+			& when (length(@arguments) > 5) {
+				.gridbox-justify(extract(@arguments, 6));
+			}
+			& when (length(@arguments) > 6) {
+				.gridbox-flow(extract(@arguments, 7));
+			}
+		}
+		&
+			when
+			(not(extract(@arguments, 1) = grid))
+			and
+			(not(extract(@arguments, 1) = inline-grid))
+			and
+			(not(extract(@arguments, 1) = skip-display)) {
+			display: grid;
+			& when (length(@arguments) > 0) {
+				.gridbox-gap(extract(@arguments, 1));
+			}
+			& when (length(@arguments) > 1) {
+				& when (not(extract(@arguments, 2) = area)) {
+					.gridbox-row(extract(@arguments, 2));
+				}
+			}
+			& when (length(@arguments) > 2) {
+				& when (not(extract(@arguments, 2) = area)) {
+					.gridbox-col(extract(@arguments, 3));
+				}
+				& when (extract(@arguments, 2) = area) {
+					.gridbox-area(extract(@arguments, 3));
+				}
+			}
+			& when (length(@arguments) > 3) {
+				.gridbox-align(extract(@arguments, 4));
+			}
+			& when (length(@arguments) > 4) {
+				.gridbox-justify(extract(@arguments, 5));
+			}
+			& when (length(@arguments) > 5) {
+				.gridbox-flow(extract(@arguments, 6));
+			}
+			& when (length(@arguments) > 6) {
+				.gridbox-area(extract(@arguments, 7));
+			}
+		}
+	}
+	.box-sizing();
+}
+
+.grid-row(...) {
+	& when (length(@arguments) = 0) {
+		grid-row-start: @default-grid-row-start;
+		grid-row-end: @default-grid-row-end;
+	}
+	& when (length(@arguments) = 1) {
+		grid-row-start: extract(@arguments, 1);
+		grid-row-end: extract(@arguments, 1);
+	}
+	& when (length(@arguments) > 1) {
+		@firstArg: extract(@arguments, 1);
+		@secondArg: extract(@arguments, 2);
+
+		& when (@firstArg = span), (@secondArg = span) {
+			grid-row-start: @arguments;
+		}
+		& when (not(@firstArg = span)) and (not(@secondArg = span)) {
+			grid-row-start: @firstArg;
+			grid-row-end: @secondArg;
+		}
+	}
+}
+.grid-col(...) {
+	& when (length(@arguments) = 0) {
+		grid-column-start: @default-grid-col-start;
+		grid-column-end: @default-grid-col-end;
+	}
+	& when (length(@arguments) = 1) {
+		grid-column-start: extract(@arguments, 1);
+		grid-column-end: extract(@arguments, 1);
+	}
+	& when (length(@arguments) > 1) {
+		@firstArg: extract(@arguments, 1);
+		@secondArg: extract(@arguments, 2);
+
+		& when (@firstArg = span), (@secondArg = span) {
+			grid-column-start: @arguments;
+		}
+		& when (not(@firstArg = span)) and (not(@secondArg = span)) {
+			grid-column-start: @firstArg;
+			grid-column-end: @secondArg;
+		}
+	}
+}
+.grid-align(...) {
+	& when (length(@arguments) = 0) {
+		align-self: @default-grid-align;
+	}
+	& when (length(@arguments) > 0) {
+		align-self: @arguments;
+	}
+}
+.grid-justify(...) {
+	& when (length(@arguments) = 0) {
+		justify-self: @default-grid-justify;
+	}
+	& when (length(@arguments) > 0) {
+		justify-self: @arguments;
+	}
+}
+.grid-aspect(...) {
+	& when (length(@arguments) = 0) {
+		aspect-ratio: @default-grid-aspect;
+	}
+	& when (length(@arguments) = 1) {
+		aspect-ratio: extract(@arguments, 1);
+	}
+	& when (length(@arguments) > 1) {
+		aspect-ratio: extract(@arguments, 1) ~'/' extract(@arguments, 2);
+	}
+}
+.grid(...) {
+	& when (length(@arguments) = 0) {
+		.grid-row();
+		.grid-col();
+	}
+	& when (length(@arguments) = 1) {
+		.grid-row(extract(@arguments, 1));
+		.grid-col(extract(@arguments, 1));
+	}
+	& when (length(@arguments) = 2) {
+		@isSpan: replace('@{arguments}', '^(span [^ ]+|[^ ]+ span)$', 'TRUE', 'gi');
+		& when (@isSpan = 'TRUE') {
+			.grid-row(@arguments);
+			.grid-col(@arguments);
+		}
+		& when (not(@isSpan = 'TRUE')) {
+			.grid-row(extract(@arguments, 1));
+			.grid-col(extract(@arguments, 2));
+		}
+	}
+	& when (length(@arguments) > 2) {
+		.grid-row(extract(@arguments, 1));
+		.grid-col(extract(@arguments, 2));
+		.grid-align(extract(@arguments, 3));
+	}
+	& when (length(@arguments) > 3) {
+		.grid-justify(extract(@arguments, 4));
+	}
+	& when (length(@arguments) > 4) {
+		.grid-aspect(extract(@arguments, 5));
+	}
+}
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	box																		*/
+/* #################### - Developer Flarian Web - ######################### */
+.box(...) {
+	& when (length(@arguments) > 0) {
+		@firstArg: extract(@arguments, 1);
+		@firstArgIsType: replace(
+			'@{firstArg}',
+			'^(inherit|initial|none|inline|block|inline-block|flex|inline-flex|grid|inline-grid) *(border-box|content-box|inherit|initial|revert|revert-layer|unset)*$',
+			'TRUE',
+			'gi'
+		);
+		@firstArgIsFlex: replace('@{firstArg}', '^(flex|inline-flex)$', 'TRUE', 'gi');
+		@firstArgIsGrid: replace('@{firstArg}', '^(grid|inline-grid)$', 'TRUE', 'gi');
+
+		& when(not(@firstArgIsType = 'TRUE')) {
+			& when (length(@arguments) > 0) {
+				& when (not(extract(@arguments, 1) = unset)) {
+					width: extract(@arguments, 1);
+				}
+			}
+			& when (length(@arguments) > 1) {
+				& when (not(extract(@arguments, 2) = unset)) {
+					height: extract(@arguments, 2);
+				}
+			}
+			& when (length(@arguments) > 2) {
+				& when (not(extract(@arguments, 3) = unset)) {
+					background: extract(@arguments, 3);
+				}
+			}
+		}
+
+		& when (@firstArgIsType = 'TRUE') {
+			& when (length(@arguments) > 0) {
+				& when (length(@firstArg) = 1) {
+					display: @firstArg;
+				}
+				& when (length(@firstArg) > 1) {
+					display: extract(@firstArg, 1);
+				}
+			}
+			& when (length(@arguments) > 1) {
+				& when (not(extract(@arguments, 2) = unset)) {
+					width: extract(@arguments, 2);
+				}
+			}
+			& when (length(@arguments) > 2) {
+				& when (not(extract(@arguments, 3) = unset)) {
+					height: extract(@arguments, 3);
+				}
+			}
+			& when (length(@arguments) > 3) {
+				& when (not(extract(@arguments, 4) = unset)) {
+					background: extract(@arguments, 4);
+				}
+			}
+
+			& when (@firstArgIsFlex = 'TRUE') {
+				& when (length(@arguments) = 5) {
+					.flexbox(skip-display; extract(@arguments, 5));
+				}
+				& when (length(@arguments) = 6) {
+					.flexbox(skip-display; extract(@arguments, 5); extract(@arguments, 6));
+				}
+				& when (length(@arguments) = 7) {
+					.flexbox(skip-display; extract(@arguments, 5); extract(@arguments, 6); extract(@arguments, 7));
+				}
+				& when (length(@arguments) > 7) {
+					.flexbox(skip-display; extract(@arguments, 5); extract(@arguments, 6); extract(@arguments, 7); extract(@arguments, 8));
+				}
+			}
+
+			& when (@firstArgIsGrid = 'TRUE') {
+				& when (length(@arguments) = 5) {
+					.gridbox(skip-display; extract(@arguments, 5));
+				}
+				& when (length(@arguments) = 6) {
+					.gridbox(skip-display; extract(@arguments, 5); extract(@arguments, 6));
+				}
+				& when (length(@arguments) = 7) {
+					.gridbox(skip-display; extract(@arguments, 5); extract(@arguments, 6); extract(@arguments, 7));
+				}
+				& when (length(@arguments) = 8) {
+					.gridbox(skip-display; extract(@arguments, 5); extract(@arguments, 6); extract(@arguments, 7); extract(@arguments, 8));
+				}
+				& when (length(@arguments) = 9) {
+					.gridbox(skip-display; extract(@arguments, 5); extract(@arguments, 6); extract(@arguments, 7); extract(@arguments, 8); extract(@arguments, 9));
+				}
+				& when (length(@arguments) > 9) {
+					.gridbox(skip-display; extract(@arguments, 5); extract(@arguments, 6); extract(@arguments, 7); extract(@arguments, 8); extract(@arguments, 9); extract(@arguments, 10));
+				}
+			}
+
+			& when (length(@arguments) > 0) {
+				& when (length(@firstArg) = 1) {
+					.box-sizing();
+				}
+				& when (length(@firstArg) > 1) {
+					.box-sizing(extract(@firstArg, 2));
+				}
+			}
+		}
+	}
+}

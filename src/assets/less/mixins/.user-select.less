@@ -1,0 +1,14 @@
+/* user-select define */
+@default-user-select: auto;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	user-select																*/
+/* #################### - Developer Flarian Web - ######################### */
+.user-select(...) {
+	& when (length(@arguments) = 0) {
+		user-select: @default-user-select;
+	}
+	& when (length(@arguments) > 0) {
+		user-select: extract(@arguments, 1);
+	}
+}

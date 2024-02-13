@@ -1,0 +1,112 @@
+/* border-radius define */
+@default-border-radius: 1rem;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	border-radius															*/
+/* #################### - Developer Flarian Web - ######################### */
+.border-top-left-radius(...) {
+	& when (length(@arguments) = 0) {
+		border-top-left-radius: @default-border-radius;
+	}
+	& when (length(@arguments) > 0) {
+		border-top-left-radius: extract(@arguments, 1);
+	}
+}
+.border-top-right-radius(...) {
+	& when (length(@arguments) = 0) {
+		border-top-right-radius: @default-border-radius;
+	}
+	& when (length(@arguments) > 0) {
+		border-top-right-radius: extract(@arguments, 1);
+	}
+}
+.border-bottom-left-radius(...) {
+	& when (length(@arguments) = 0) {
+		border-bottom-left-radius: @default-border-radius;
+	}
+	& when (length(@arguments) > 0) {
+		border-bottom-left-radius: extract(@arguments, 1);
+	}
+}
+.border-bottom-right-radius(...) {
+	& when (length(@arguments) = 0) {
+		border-bottom-right-radius: @default-border-radius;
+	}
+	& when (length(@arguments) > 0) {
+		border-bottom-right-radius: extract(@arguments, 1);
+	}
+}
+.border-top-radius(...) {
+	& when (length(@arguments) = 0) {
+		.border-top-left-radius();
+		.border-top-right-radius();
+	}
+	& when (length(@arguments) = 1) {
+		.border-top-left-radius(extract(@arguments, 1));
+		.border-top-right-radius(extract(@arguments, 1));
+	}
+	& when (length(@arguments) > 1) {
+		.border-top-left-radius(extract(@arguments, 1));
+		.border-top-right-radius(extract(@arguments, 2));
+	}
+}
+.border-left-radius(...) {
+	& when (length(@arguments) = 0) {
+		.border-top-left-radius();
+		.border-bottom-left-radius();
+	}
+	& when (length(@arguments) = 1) {
+		.border-top-left-radius(extract(@arguments, 1));
+		.border-bottom-left-radius(extract(@arguments, 1));
+	}
+	& when (length(@arguments) > 1) {
+		.border-top-left-radius(extract(@arguments, 1));
+		.border-bottom-left-radius(extract(@arguments, 2));
+	}
+}
+.border-right-radius(...) {
+	& when (length(@arguments) = 0) {
+		.border-top-right-radius();
+		.border-bottom-right-radius();
+	}
+	& when (length(@arguments) = 1) {
+		.border-top-right-radius(extract(@arguments, 1));
+		.border-bottom-right-radius(extract(@arguments, 1));
+	}
+	& when (length(@arguments) > 1) {
+		.border-top-right-radius(extract(@arguments, 1));
+		.border-bottom-right-radius(extract(@arguments, 2));
+	}
+}
+.border-bottom-radius(...) {
+	& when (length(@arguments) = 0) {
+		.border-bottom-left-radius();
+		.border-bottom-right-radius();
+	}
+	& when (length(@arguments) = 1) {
+		.border-bottom-left-radius(extract(@arguments, 1));
+		.border-bottom-right-radius(extract(@arguments, 1));
+	}
+	& when (length(@arguments) > 1) {
+		.border-bottom-left-radius(extract(@arguments, 1));
+		.border-bottom-right-radius(extract(@arguments, 2));
+	}
+}
+.border-radius(...) {
+	& when (length(@arguments) = 0) {
+		border-radius: @default-border-radius;
+	}
+	& when (length(@arguments) = 1) {
+		border-radius: extract(@arguments, 1);
+	}
+	& when (length(@arguments) = 2) {
+		border-radius: extract(@arguments, 1) extract(@arguments, 2);
+	}
+	& when (length(@arguments) = 3) {
+		border-radius: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3);
+	}
+	& when (length(@arguments) > 3) {
+		border-radius: extract(@arguments, 1) extract(@arguments, 2) extract(@arguments, 3)
+			extract(@arguments, 4);
+	}
+}

@@ -1,0 +1,44 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	rotateX rotateY rotate rotate3d (transform)								*/
+/* #################### - Developer Flarian Web - ######################### */
+.rotate(...) {
+	@value: extract(@arguments, 1);
+	& when (isnumber(@value)) {
+		transform+_: rotate(@value*1deg);
+	}
+}
+.rotateX(...) {
+	@value: extract(@arguments, 1);
+	& when (isnumber(@value)) {
+		transform+_: rotateX(@value*1deg);
+	}
+}
+.rotateY(...) {
+	@value: extract(@arguments, 1);
+	& when (isnumber(@value)) {
+		transform+_: rotateY(@value*1deg);
+	}
+}
+.rotateZ(...) {
+	@value: extract(@arguments, 1);
+	& when (isnumber(@value)) {
+		transform+_: rotateZ(@value*1deg);
+	}
+}
+.rotate3d(...) {
+	@first: extract(@arguments, 1);
+	@second: extract(@arguments, 2);
+	@third: extract(@arguments, 3);
+	@fourth: extract(@arguments, 4);
+	&
+		when
+		(isnumber(@first))
+		and
+		(isnumber(@second))
+		and
+		(isnumber(@third))
+		and
+		(isnumber(@fourth)) {
+		transform+_: rotate3d(@first, @second, @third, @fourth*1deg);
+	}
+}

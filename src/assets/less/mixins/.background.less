@@ -1,0 +1,58 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	background																*/
+/* #################### - Developer Flarian Web - ######################### */
+.background(...) {
+	@background-color: extract(@arguments, 1);
+	@background-image: extract(@arguments, 2);
+	@background-repeat: extract(@arguments, 3);
+	@background-position: extract(@arguments, 4);
+	@background-size: extract(@arguments, 5);
+	@background-attachment: extract(@arguments, 6);
+	@background-clip: extract(@arguments, 7);
+	@background-origin: extract(@arguments, 8);
+
+	& when ((length(@arguments) > 0) and (length(@arguments) < 9)) {
+		& when ((length(@arguments) > 0) and (@background-color = none)) {
+			background: none;
+		}
+		& when ((length(@arguments) > 0) and not(@background-color = unset)) {
+			background-color: @background-color;
+		}
+		& when ((length(@arguments) > 1) and not(@background-image = unset)) {
+			@findX2: replace('@{background-image}', '^(.*?)?(\.[a-zA-Z]+)', 'IMG', 'gi');
+			@background-image-x1: replace('@{background-image}', '\+', '', 'gi');
+			@background-image-x2: replace(
+				'@{background-image-x1}',
+				'(.*?)?(\.[a-zA-Z]+)$',
+				'$1@x2$2',
+				'gi'
+			);
+			background-image: url('../../@{background-image-x1}');
+			& when (@findX2 = 'IMG+') {
+				@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+					only screen and (-moz-min-device-pixel-ratio: 1.5),
+					only screen and (-o-min-device-pixel-ratio: 1.5) {
+					background-image: url('../../@{background-image-x2}');
+				}
+			}
+		}
+		& when ((length(@arguments) > 2) and not(@background-repeat = unset)) {
+			background-repeat: @background-repeat;
+		}
+		& when ((length(@arguments) > 3) and not(@background-position = unset)) {
+			background-position: @background-position;
+		}
+		& when ((length(@arguments) > 4) and not(@background-size = unset)) {
+			background-size: @background-size;
+		}
+		& when ((length(@arguments) > 5) and not(@background-attachment = unset)) {
+			background-attachment: @background-attachment;
+		}
+		& when ((length(@arguments) > 6) and not(@background-clip = unset)) {
+			background-clip: @background-clip;
+		}
+		& when ((length(@arguments) > 7) and not(@background-clip = unset)) {
+			background-origin: @background-origin;
+		}
+	}
+}

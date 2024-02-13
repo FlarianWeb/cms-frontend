@@ -1,0 +1,45 @@
+/* Strike define */
+@default-strike-position: center center;
+@default-strike-size: contain;
+@default-strike-repeat: no-repeat;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	strike																	*/
+/* #################### - Developer Flarian Web - ######################### */
+.strike(...) {
+	@width: extract(@arguments, 1);
+	@height: extract(@arguments, 2);
+	@color: extract(@arguments, 3);
+	@top: extract(@arguments, 4);
+	@left: extract(@arguments, 5);
+	@w: replace('@{width}', '([^0-9\%])', '', 'gi');
+	@h: replace('@{height}', '([^0-9\%])', '', 'gi');
+	@c: replace('@{color}', '\#', '%23', 'gi');
+	@t: replace('@{top}', '([^0-9\%])', '', 'gi');
+	@l: replace('@{left}', '([^0-9\%])', '', 'gi');
+
+	& when (length(@arguments) = 3) {
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='@{w}' height='@{h}'%3E%3Cline y2='0' x2='@{w}' y1='@{h}' x1='0' stroke='@{c}' /%3E%3C/svg%3E")
+			@default-strike-position ~'/' @default-strike-size @default-strike-repeat;
+	}
+	& when (length(@arguments) = 4) {
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='@{w}' height='@{h}'%3E%3Cline y2='@{t}' x2='@{w}' y1='@{h}' x1='0' stroke='@{c}' /%3E%3C/svg%3E")
+			@default-strike-position ~'/' @default-strike-size @default-strike-repeat;
+	}
+	& when (length(@arguments) = 5) {
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='@{w}' height='@{h}'%3E%3Cline y2='@{t}' x2='@{w}' y1='@{h}' x1='@{l}' stroke='@{c}' /%3E%3C/svg%3E")
+			@default-strike-position ~'/' @default-strike-size @default-strike-repeat;
+	}
+	& when (length(@arguments) = 6) {
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='@{w}' height='@{h}'%3E%3Cline y2='@{t}' x2='@{w}' y1='@{h}' x1='@{l}' stroke='@{c}' /%3E%3C/svg%3E")
+			@default-strike-position ~'/' @default-strike-size extract(@arguments, 6);
+	}
+	& when (length(@arguments) = 7) {
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='@{w}' height='@{h}'%3E%3Cline y2='@{t}' x2='@{w}' y1='@{h}' x1='@{l}' stroke='@{c}' /%3E%3C/svg%3E")
+			extract(@arguments, 7) ~'/' @default-strike-size extract(@arguments, 6);
+	}
+	& when (length(@arguments) = 8) {
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='@{w}' height='@{h}'%3E%3Cline y2='@{t}' x2='@{w}' y1='@{h}' x1='@{l}' stroke='@{c}' /%3E%3C/svg%3E")
+			extract(@arguments, 7) ~'/' extract(@arguments, 8) extract(@arguments, 6);
+	}
+}

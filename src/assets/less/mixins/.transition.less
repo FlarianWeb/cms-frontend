@@ -1,0 +1,86 @@
+/* Transition define */
+@default-transition-property: all;
+@default-transition-duration: 250ms;
+@default-transition-timing-function: @easing-sine;
+@default-transition-delay: 0ms;
+
+/* #################### - Developer Flarian Web - ######################### */
+/*	transition																*/
+/* #################### - Developer Flarian Web - ######################### */
+.transition(@first-arg:all; @rest ...) {
+	& when (length(@arguments) = 1) {
+		@duration: replace('@{first-arg}', '([0-9])', '', 'gi');
+		& when (@duration = 'ms'), (@duration = 's') {
+			transition: @default-transition-property @first-arg @default-transition-timing-function
+				@default-transition-delay;
+		}
+		& when (not(@duration = 'ms')) and (not(@duration = 's')) {
+			transition: @default-transition-property @default-transition-duration
+				@default-transition-timing-function @default-transition-delay;
+		}
+	}
+	& when (length(@arguments) = 2) {
+		@find-duration: extract(@rest, 1);
+		each(@first-arg, {
+			transition+: @value @find-duration @default-transition-timing-function
+				@default-transition-delay;
+		});
+	}
+	& when (length(@arguments) = 3) {
+		@find-duration: extract(@rest, 1);
+		@find-rule: extract(@rest, 2);
+		@rule-set: replace('@{find-rule}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{find-rule}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@is-rule-set: replace('@{easing-names}', "(.*)'(@{find-rule})'(.*)", '$2', 'gi');
+		each(@first-arg, {
+			& when (~'@{timing}' = cubic-bezier) {
+				transition+: @value @find-duration @find-rule @default-transition-delay;
+			}
+			& when (~'@{is-rule-set}' = ~'@{find-rule}') {
+				transition+: @value @find-duration ~'@{rule-set}' @default-transition-delay;
+			}
+			&
+				when
+				(not(~'@{timing}' = cubic-bezier))
+				and
+				(not(~'@{is-rule-set}' = ~'@{find-rule}')) {
+				transition+: @value @find-duration @default-transition-timing-function
+					@default-transition-delay;
+			}
+		});
+	}
+	& when (length(@arguments) >= 4) {
+		@find-duration: extract(@rest, 1);
+		@find-rule: extract(@rest, 2);
+		@find-delay: extract(@rest, 3);
+		@rule-set: replace('@{find-rule}', '(.+)', '@{easing-$1}', 'gi');
+		@timing: replace(
+			'@{find-rule}',
+			'(cubic-bezier)+\((.*?)\,(.*?)\,(.*?)\,(.*?)\)',
+			'$1',
+			'gi'
+		);
+		@is-rule-set: replace('@{easing-names}', "(.*)'(@{find-rule})'(.*)", '$2', 'gi');
+		each(@first-arg, {
+			& when (~'@{timing}' = cubic-bezier) {
+				transition+: @value @find-duration @find-rule @find-delay;
+			}
+			& when (~'@{is-rule-set}' = ~'@{find-rule}') {
+				transition+: @value @find-duration ~'@{rule-set}' @find-delay;
+			}
+			&
+				when
+				(not(~'@{timing}' = cubic-bezier))
+				and
+				(not(~'@{is-rule-set}' = ~'@{find-rule}')) {
+				transition+: @value @find-duration @default-transition-timing-function
+					@find-delay;
+			}
+		});
+	}
+}

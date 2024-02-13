@@ -1,0 +1,12 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	selection																*/
+/* #################### - Developer Flarian Web - ######################### */
+.selection(...) {
+	@attr: extract(@arguments, 1);
+	@value: extract(@arguments, 2);
+	& when (length(@arguments) = 2) {
+		&::selection {
+			@{attr}: @value;
+		}
+	}
+}

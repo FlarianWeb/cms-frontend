@@ -6,6 +6,7 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const arrayToObjectValues: typeof import('../hooks/ui/useUI')['arrayToObjectValues']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
@@ -63,6 +64,7 @@ declare global {
   const useRouter: typeof import('vue-router/auto')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
   const useTheme: typeof import('../hooks/theme/useTheme')['useTheme']
+  const useUI: typeof import('../hooks/ui/useUI')['useUI']
   const useVuelidate: typeof import('@vuelidate/core')['useVuelidate']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']

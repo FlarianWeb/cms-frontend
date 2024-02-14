@@ -62,4 +62,6 @@ const buildGlobalVars = (): ThemeGlobalVars => {
 	};
 };
 
+console.log(buildGlobalVars());
+
 export const globalVars = buildGlobalVars();

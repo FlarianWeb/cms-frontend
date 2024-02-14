@@ -1,0 +1,113 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	UI Toggle																*/
+/* #################### - Developer Flarian Web - ######################### */
+@ui-toggle: ~'UiToggle';
+@ui-toggle-switcher: ~'@{ui-toggle}-switcher';
+@ui-toggle-slider: ~'@{ui-toggle}-slider';
+
+@ui-toggle--rounded: ~'@{ui-toggle}--rounded';
+@ui-toggle--active: ~'@{ui-toggle}--active';
+
+.@{ui-toggle} {
+	.py(0.25rem);
+	.cursor-pointer();
+	.text(inherit; 1em 1em);
+	.box(inline-grid; auto; auto; none; 0.5rem; 1fr; auto 1fr; center; start);
+
+	/* toggle focus */
+	&:focus-visible {
+		.@{ui-toggle-switcher} {
+			.outline(@colorBase 0.125rem solid; 0.125rem);
+		}
+	}
+
+	/* toggle-switcher */
+	& .@{ui-toggle-switcher} {
+		.pa(0.125rem);
+		.box(flex content-box; 2rem; auto; @colorBgSoft);
+		.transition(background; @duration; @easing) !important;
+	}
+
+	/* toggle-slider */
+	& .@{ui-toggle-slider} {
+		.grid(1 span; 1 2);
+		.box(1rem; 1rem);
+		.background(@colorBg);
+		.transition(all; @duration; @easing) !important;
+	}
+
+	/* toggle rounded */
+	&.@{ui-toggle--rounded} {
+		& .@{ui-toggle-switcher},
+		& .@{ui-toggle-slider} {
+			.border-radius(@rounded);
+		}
+	}
+
+	/* toggle active */
+	&.@{ui-toggle--active} {
+		& .@{ui-toggle-switcher} {
+			.background(@colorBase);
+		}
+		& .@{ui-toggle-slider} {
+			.translateX(100%);
+		}
+	}
+
+	/* toggle disabled */
+	&[disabled] {
+		.opacity(0.5);
+		.cursor-not-allowed();
+	}
+}
+
+// .-eachTheme(@theme) {
+// 	.-eachMode(@mode) {
+// 		.-eachColorType(@colorType) {
+// 			.-eachColorTone(@colorTone) {
+// 				.themeConstructor(@theme; @mode; @colorType; @colorTone);
+// 			}
+// 		}
+// 	}
+// }
+.set-ui-toggle-sizes(@s:1; @e:length(@globalSizes); @text:0.75rem; @size:0.5rem) when (@s <= @e) {
+	// .UiToggle {
+	// 	.text(inherit; 1em @text);
+	// 	.box(@size; @size);
+	// }
+	.set-ui-toggle-sizes(@s + 1; @e; @text + 0.125rem; @size + 0.25rem);
+}
+.set-ui-toggle-sizes();
+
+// .-eachTheme(@theme) {
+// 	.UiToggle {
+// 		globalthemes: @theme;
+// 	}
+// }
+
+// .-eachColorType(@colorType) {
+// 	.UiToggle {
+// 		colortype: @colorType;
+// 	}
+// }
+
+// .UiToggle {
+// 	bg: extract(@globalColorTypes, 1);
+// 	text: extract(@globalColorTypes, 2);
+// 	base: extract(@globalColorTypes, 3);
+// }
+
+// .UiToggle {
+// 	main: extract(@globalColorTones, 1);
+// 	soft: extract(@globalColorTones, 2);
+// 	hard: extract(@globalColorTones, 3);
+// }
+
+// .themeConstructor(@theme; @mode; @colorType; @colorTone) {
+// 	.UiToggle {
+// 		globalthemes: @theme;
+// 		globalmodes: @mode;
+// 		globalmodes: @colorType;
+// 		globalmodes: @colorTone;
+// 	}
+// }

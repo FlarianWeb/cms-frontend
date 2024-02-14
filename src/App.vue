@@ -12,4 +12,8 @@ div(@click='darkMode = false', style='color: var(--color-base-soft); cursor: poi
 //- FIXME: For Example. Remove me
 pre {{ darkMode ? 'colorMode: dark' : 'colorMode: light' }}
 pre colorTheme: {{ colorTheme }}
+
+br
+br
+UiToggle
 </template>

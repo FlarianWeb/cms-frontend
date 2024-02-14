@@ -63,4 +63,8 @@ export default defineConfig({
 			'@': fileURLToPath(new URL('./src/assets', import.meta.url)),
 		},
 	},
+
+	build: {
+		cssMinify: 'lightningcss',
+	},
 });

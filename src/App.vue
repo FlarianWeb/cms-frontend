@@ -16,4 +16,33 @@ pre colorTheme: {{ colorTheme }}
 br
 br
 UiToggle
+br
+div theme
+UiToggle(theme='secondary')
+UiToggle(theme='primary')
+br
+div color
+UiToggle(color='done')
+UiToggle(color='danger')
+UiToggle(color='alert')
+UiToggle(color='info')
+br
+div size
+UiToggle(size='xs')
+UiToggle(size='sm', theme='secondary')
+UiToggle(size='md', theme='secondary', color='alert')
+UiToggle(size='lg', color='danger')
+UiToggle(size='xl')
+br
+div size
+UiToggle(size='xs', label='label text')
+br
+UiToggle(size='sm', theme='secondary', disabled, label='label text')
+br
+UiToggle(size='md', theme='secondary', color='alert', disabled, label='label text')
+br
+UiToggle(size='lg', color='danger', square, reverse, label='label text')
+	span Slot text
+br
+UiToggle(size='xl', disabled, label='label text')
 </template>

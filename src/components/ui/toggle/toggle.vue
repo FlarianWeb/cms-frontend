@@ -7,7 +7,7 @@ import type { UiToggle } from '~/models/ui/toggle';
 
 /* Define props */
 const {
-	size = 'md',
+	size = undefined,
 	theme = undefined,
 	color = undefined,
 	label = undefined,
@@ -35,22 +35,20 @@ const baseClass = computed(() => classes.base || 'UiToggle');
 const switcherClass = computed(() => `${baseClass.value}-${classes.switcher || 'switcher'}`);
 const sliderClass = computed(() => `${baseClass.value}-${classes.slider || 'slider'}`);
 
-/* Toggle theme classes */
+/* Toggle theme  */
 const toggleTheme: UiToggle.Theme = {
 	base: baseClass.value,
 	rounded: `${baseClass.value}--rounded`,
-	theme: themeObjectConstructor(Common.Themes, `${baseClass.value}--theme-`),
-	color: themeObjectConstructor(Common.Color, `${baseClass.value}--color-`),
-	size: themeObjectConstructor(Common.Size, `${baseClass.value}--size-`),
+	theme: themeObjectConstructor(Common.Themes),
+	color: themeObjectConstructor(Common.Color),
+	size: themeObjectConstructor(Common.Size),
 };
 
+/* Toggle classes */
 const toggleClass = computed(() =>
 	clsx(
 		toggleTheme.base,
-		toggleTheme.size[size] || toggleTheme.size.md,
 		!square && toggleTheme.rounded,
-		theme && toggleTheme.theme[theme],
-		color && toggleTheme.color[color],
 		reverse && !modelValue.value && `${baseClass.value}--active`,
 		!reverse && modelValue.value && `${baseClass.value}--active`
 	)
@@ -59,11 +57,19 @@ const toggleClass = computed(() =>
 /* Toggle theme attributes */
 const isDisabled = computed(() => (disabled ? 'disabled' : undefined));
 const isTabindex = computed(() => (disabled ? undefined : 1));
+
+/* Data attributes */
+const dataTheme = computed(() => (theme ? toggleTheme.theme[theme] : undefined));
+const dataColor = computed(() => (color ? toggleTheme.color[color] : undefined));
+const dataSize = computed(() => (size ? toggleTheme.size[size] : undefined));
 </script>
 
 <template lang="pug">
 label(
 	:class='toggleClass',
+	:data-theme='dataTheme',
+	:data-color='dataColor',
+	:data-size='dataSize',
 	v-bind='{ disabled: isDisabled, tabindex: isTabindex }',
 	@click='toggleModelValue',
 	@keyup.space='toggleModelValue',
@@ -74,5 +80,5 @@ label(
 		div(:class='sliderClass')
 			//- TODO: UI Icon
 	slot
-		template(v-if='label') {{ label }} {{ switcherClass }}
+		template(v-if='label') {{ label }}
 </template>

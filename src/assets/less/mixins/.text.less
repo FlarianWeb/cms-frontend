@@ -19,13 +19,13 @@
 	& when (length(@arguments) > 1) {
 		@font: extract(@arguments, 2);
 		& when (not(@font = none)) {
-			& when (length(@font) > 0) {
+			& when (length(@font) > 0) and (not(extract(@font, 1) = none)) {
 				line-height: extract(@font, 1);
 			}
-			& when (length(@font) > 1) {
+			& when (length(@font) > 1) and (not(extract(@font, 2) = none)) {
 				font-size: extract(@font, 2);
 			}
-			& when (length(@font) > 2) {
+			& when (length(@font) > 2) and (not(extract(@font, 3) = none)) {
 				font-weight: extract(@font, 3);
 			}
 			& when (length(@font) > 3) {
@@ -36,10 +36,10 @@
 	& when (length(@arguments) > 2) {
 		@style: extract(@arguments, 3);
 		& when (not(@style = none)) {
-			& when (length(@style) > 0) {
+			& when (length(@style) > 0) and (not(extract(@style, 1) = none)) {
 				text-align: extract(@style, 1);
 			}
-			& when (length(@style) > 1) {
+			& when (length(@style) > 1) and (not(extract(@style, 2) = none)) {
 				font-style: extract(@style, 2);
 			}
 		}
@@ -47,10 +47,10 @@
 	& when (length(@arguments) > 3) {
 		@decoration: extract(@arguments, 4);
 		& when (not(@decoration = none)) {
-			& when (length(@decoration) > 0) {
+			& when (length(@decoration) > 0) and (not(extract(@decoration, 1) = none)) {
 				text-transform: extract(@decoration, 1);
 			}
-			& when (length(@decoration) > 1) {
+			& when (length(@decoration) > 1) and (not(extract(@decoration, 2) = none)) {
 				text-decoration: extract(@decoration, 2);
 			}
 		}

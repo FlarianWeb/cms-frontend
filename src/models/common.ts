@@ -63,5 +63,6 @@ export type ThemeGlobalVars = {
 	globalModes: [keyof typeof Common.Modes];
 	globalColorTypes: [keyof typeof Common.ColorTypes];
 	globalColorTones: [keyof typeof Common.ColorTones];
+	globalColor: [keyof typeof Common.Color];
 	globalSizes: [keyof typeof Common.Size];
 } & Record<string, string>;

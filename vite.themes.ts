@@ -11,6 +11,7 @@ const buildGlobalVars = (): ThemeGlobalVars => {
 	const globalModes = enumKeys(Common.Modes);
 	const globalColorTypes = enumKeys(Common.ColorTypes);
 	const globalColorTones = enumKeys(Common.ColorTones);
+	const globalColor = enumKeys(Common.Color);
 	const globalSizes = enumKeys(Common.Size);
 
 	const globalVariablesList: Record<string, string> = {};
@@ -18,7 +19,7 @@ const buildGlobalVars = (): ThemeGlobalVars => {
 	/** Insert basic colors */
 	if (basic.color) {
 		for (const color of <[keyof typeof Common.Color]>Object.keys(basic.color)) {
-			globalVariablesList[`color-${capitalizeFirstLetter(color)}`] = basic.color[color];
+			globalVariablesList[`color-${color}`] = basic.color[color];
 		}
 	}
 
@@ -57,6 +58,7 @@ const buildGlobalVars = (): ThemeGlobalVars => {
 		globalModes,
 		globalColorTypes,
 		globalColorTones,
+		globalColor,
 		globalSizes,
 		...globalVariablesList,
 	};

@@ -1,0 +1,133 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	UI Toggle																*/
+/* #################### - Developer Flarian Web - ######################### */
+@ui-toggle: ~'UiToggle';
+@ui-toggle-switcher: ~'@{ui-toggle}-switcher';
+@ui-toggle-slider: ~'@{ui-toggle}-slider';
+
+@ui-toggle--rounded: ~'@{ui-toggle}--rounded';
+@ui-toggle--active: ~'@{ui-toggle}--active';
+
+.@{ui-toggle} {
+	.py(0.25rem);
+	.cursor-pointer();
+	.text(inherit; 1em 1em);
+	.box(inline-grid; auto; auto; none; 0.5rem; 1fr; auto 1fr; center; start);
+
+	/* toggle-switcher */
+	& .@{ui-toggle-switcher} {
+		.pa(0.125rem);
+		.box(flex content-box; 2rem; auto);
+		.transition(background; @duration; @easing) !important;
+	}
+
+	/* toggle-slider */
+	& .@{ui-toggle-slider} {
+		.grid(1 span; 1 2);
+		.box(1rem; 1rem);
+		.transition(all; @duration; @easing) !important;
+	}
+
+	/* toggle rounded */
+	&.@{ui-toggle--rounded} {
+		& .@{ui-toggle-switcher},
+		& .@{ui-toggle-slider} {
+			.border-radius(@rounded);
+		}
+	}
+
+	/* toggle active */
+	&.@{ui-toggle--active} {
+		& .@{ui-toggle-slider} {
+			.translateX(100%);
+		}
+	}
+
+	/* toggle theme */
+	&:not([data-theme]),
+	&[data-color] {
+		&:focus-visible {
+			.@{ui-toggle-switcher} {
+				.outline(@colorBase 0.125rem solid; 0.125rem);
+			}
+		}
+		& .@{ui-toggle-switcher} {
+			.background(@colorBgSoft);
+		}
+		& .@{ui-toggle-slider} {
+			.background(@colorBg);
+		}
+		&.@{ui-toggle--active} {
+			& .@{ui-toggle-switcher} {
+				.background(@colorBase);
+			}
+		}
+	}
+
+	/* toggle [disabled] */
+	&[disabled] {
+		.opacity(0.5);
+		.cursor-not-allowed();
+	}
+
+	/* toggle [data-color] */
+	.-each-ui-toggle-color(@i:1; @l:length(@globalColor)) when (@i <= @l) {
+		@color: extract(@globalColor, @i);
+		&[data-color='@{color}'] {
+			&:focus-visible {
+				.@{ui-toggle-switcher} {
+					.outline(~'@{color-@{color}}' 0.125rem solid; 0.125rem);
+				}
+			}
+			&.@{ui-toggle--active} {
+				& .@{ui-toggle-switcher} {
+					.background(~'@{color-@{color}}');
+				}
+			}
+		}
+		.-each-ui-toggle-color(@i + 1; @l);
+	}
+	.-each-ui-toggle-color();
+
+	/* toggle [data-size] */
+	.-each-ui-toggle-size(@i:1; @l:length(@globalSizes); @text:0.75rem; @switcher:1rem; @slider:0.5rem)
+		when
+		(@i <= @l) {
+		@size: extract(@globalSizes, @i);
+		&[data-size='@{size}'] {
+			.text(none; none @text);
+			& .@{ui-toggle-switcher} {
+				.box(@switcher);
+			}
+			& .@{ui-toggle-slider} {
+				.box(@slider; @slider);
+			}
+		}
+		.-each-ui-toggle-size(@i + 1; @l; @text + 0.125rem; @switcher + 0.5rem; @slider + 0.25rem);
+	}
+	.-each-ui-toggle-size();
+}
+
+/* toggle [data-theme] */
+.-eachTheme(@theme) {
+	.-eachMode(@mode) {
+		html[mode='@{mode}'] .@{ui-toggle}[data-theme='@{theme}']:not([data-color]) {
+			&:focus-visible {
+				.@{ui-toggle-switcher} {
+					.outline(~'@{@{theme}-@{mode}-base-main}' 0.125rem solid; 0.125rem);
+				}
+			}
+			& .@{ui-toggle-switcher} {
+				.background(~'@{@{theme}-@{mode}-bg-soft}');
+			}
+			& .@{ui-toggle-slider} {
+				.background(~'@{@{theme}-@{mode}-bg-main}');
+			}
+			&.@{ui-toggle--active} {
+				& .@{ui-toggle-switcher} {
+					.background(~'@{@{theme}-@{mode}-base-main}');
+				}
+			}
+		}
+	}
+}

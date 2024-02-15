@@ -6,9 +6,9 @@ import { UiConfig, type UiToggle } from '~/models/ui';
 
 /* Define props */
 const {
-	size = undefined,
 	theme = undefined,
 	color = undefined,
+	size = undefined,
 	label = undefined,
 	iconOn = undefined, // TODO: add after ui icon
 	iconOff = undefined, // TODO: add after ui icon

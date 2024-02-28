@@ -2,8 +2,7 @@
 import { clsx } from 'clsx';
 import { noop, useToggle } from '@vueuse/core';
 
-import { Common } from '~/models/common';
-import type { UiToggle } from '~/models/ui/toggle';
+import { UiConfig, type UiToggle } from '~/models/ui';
 
 /* Define props */
 const {
@@ -13,9 +12,9 @@ const {
 	label = undefined,
 	iconOn = undefined, // TODO: add after ui icon
 	iconOff = undefined, // TODO: add after ui icon
-	square,
-	reverse,
-	disabled,
+	square = false,
+	reverse = false,
+	disabled = false,
 	classes = { base: 'UiToggle', switcher: 'switcher', slider: 'slider' },
 } = defineProps<UiToggle.Props>();
 
@@ -39,9 +38,9 @@ const sliderClass = computed(() => `${baseClass.value}-${classes.slider || 'slid
 const toggleTheme: UiToggle.Theme = {
 	base: baseClass.value,
 	rounded: `${baseClass.value}--rounded`,
-	theme: themeObjectConstructor(Common.Themes),
-	color: themeObjectConstructor(Common.Color),
-	size: themeObjectConstructor(Common.Size),
+	theme: themeObjectConstructor(UiConfig.Themes),
+	color: themeObjectConstructor(UiConfig.Colors),
+	size: themeObjectConstructor(UiConfig.Sizes),
 };
 
 /* Toggle classes */

@@ -2,17 +2,17 @@ import { useUI } from './useUI';
 
 const { themeObjectConstructor } = useUI();
 
-enum ColorEnumMock {
-	danger,
-	alert,
-	done,
-	info,
-}
+const ColorMock = {
+	DANGER: 'danger',
+	ALERT: 'alert',
+	INFO: 'info',
+	DONE: 'done',
+} as const;
 
 describe('hooks/ui/useUI', () => {
 	describe('themeObjectConstructor with prefix and suffix', () => {
 		it('themeObjectConstructor', () => {
-			const result = themeObjectConstructor(ColorEnumMock, 'color-', '-theme');
+			const result = themeObjectConstructor(ColorMock, 'color-', '-theme');
 			expect(result).toEqual({
 				danger: 'color-danger-theme',
 				alert: 'color-alert-theme',
@@ -22,7 +22,7 @@ describe('hooks/ui/useUI', () => {
 		});
 
 		it('themeObjectConstructor with prefix only', () => {
-			const result = themeObjectConstructor(ColorEnumMock, 'color-');
+			const result = themeObjectConstructor(ColorMock, 'color-');
 			expect(result).toEqual({
 				danger: 'color-danger',
 				alert: 'color-alert',
@@ -32,7 +32,7 @@ describe('hooks/ui/useUI', () => {
 		});
 
 		it('themeObjectConstructor with suffix only', () => {
-			const result = themeObjectConstructor(ColorEnumMock, null, '-theme');
+			const result = themeObjectConstructor(ColorMock, null, '-theme');
 			expect(result).toEqual({
 				danger: 'danger-theme',
 				alert: 'alert-theme',
@@ -42,7 +42,7 @@ describe('hooks/ui/useUI', () => {
 		});
 
 		it('themeObjectConstructor without prefix and suffix', () => {
-			const result = themeObjectConstructor(ColorEnumMock);
+			const result = themeObjectConstructor(ColorMock);
 			expect(result).toEqual({
 				danger: 'danger',
 				alert: 'alert',
@@ -52,7 +52,7 @@ describe('hooks/ui/useUI', () => {
 		});
 
 		it('themeObjectConstructor with empty prefix and suffix values', () => {
-			const result = themeObjectConstructor(ColorEnumMock, '', '');
+			const result = themeObjectConstructor(ColorMock, '', '');
 			expect(result).toEqual({
 				danger: 'danger',
 				alert: 'alert',
@@ -62,7 +62,7 @@ describe('hooks/ui/useUI', () => {
 		});
 
 		test('themeObjectConstructor with null prefix and suffix values', () => {
-			const result = themeObjectConstructor(ColorEnumMock, null, null);
+			const result = themeObjectConstructor(ColorMock, null, null);
 			expect(result).toEqual({
 				danger: 'danger',
 				alert: 'alert',

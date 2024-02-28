@@ -1,24 +1,25 @@
-import { Common, type ThemeGlobalVars } from './src/models/common';
-import { enumKeys } from './src/utils/common';
+import { UiConfig, type UiTheme } from './src/models/ui';
 import { basic, themes } from './themes.config';
 
 const capitalizeFirstLetter = (str: string) => {
 	return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const buildGlobalVars = (): ThemeGlobalVars => {
-	const globalThemes = enumKeys(Common.Themes);
-	const globalModes = enumKeys(Common.Modes);
-	const globalColorTypes = enumKeys(Common.ColorTypes);
-	const globalColorTones = enumKeys(Common.ColorTones);
-	const globalColor = enumKeys(Common.Color);
-	const globalSizes = enumKeys(Common.Size);
+const buildGlobalVars = (): UiTheme.GlobalVars => {
+	const globalThemes = Object.values(UiConfig.Themes);
+	const globalModes = Object.values(UiConfig.Modes);
+	const globalColorTypes = Object.values(UiConfig.ColorTypes);
+	const globalColorTones = Object.values(UiConfig.ColorTones);
+	const globalColors = Object.values(UiConfig.Colors);
+	const globalSizes = Object.values(UiConfig.Sizes);
 
 	const globalVariablesList: Record<string, string> = {};
 
 	/** Insert basic colors */
 	if (basic.color) {
-		for (const color of <[keyof typeof Common.Color]>Object.keys(basic.color)) {
+		for (const color of <[(typeof UiConfig.Colors)[keyof typeof UiConfig.Colors]]>(
+			Object.keys(basic.color)
+		)) {
 			globalVariablesList[`color-${color}`] = basic.color[color];
 		}
 	}
@@ -46,19 +47,19 @@ const buildGlobalVars = (): ThemeGlobalVars => {
 	for (const colorType of globalColorTypes) {
 		for (const colorTone of globalColorTones) {
 			globalVariablesList[
-				colorTone === Common.ColorTones[0]
+				colorTone === UiConfig.ColorTones.MAIN
 					? `color${capitalizeFirstLetter(colorType)}`
 					: `color${capitalizeFirstLetter(colorType)}${capitalizeFirstLetter(colorTone)}`
 			] = `var(--color-${colorType}-${colorTone})`;
 		}
 	}
 
-	return <ThemeGlobalVars>{
+	return <UiTheme.GlobalVars>{
 		globalThemes,
 		globalModes,
 		globalColorTypes,
 		globalColorTones,
-		globalColor,
+		globalColors,
 		globalSizes,
 		...globalVariablesList,
 	};

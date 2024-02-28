@@ -1,6 +1,6 @@
-import type { ThemeBasicConfig, ThemeConfig } from './src/models/common';
+import type { UiTheme } from './src/models/ui';
 
-export const basic: ThemeBasicConfig = {
+export const basic: UiTheme.BasicConfig = {
 	color: {
 		danger: '#e74c3c',
 		alert: '#f39c12',
@@ -23,7 +23,7 @@ export const basic: ThemeBasicConfig = {
 	},
 };
 
-export const themes: ThemeConfig = {
+export const themes: UiTheme.ThemeConfig = {
 	primary: {
 		light: {
 			bg: {

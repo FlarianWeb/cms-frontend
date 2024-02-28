@@ -8,9 +8,7 @@
 		"cypress.config.*",
 		"nightwatch.conf.*",
 		"playwright.config.*",
-		"src/utils/common.*",
-		"src/models/common.*",
-		"src/models/common.ts"
+		"src/models/ui/*"
 	],
 	"compilerOptions": {
 		"composite": true,

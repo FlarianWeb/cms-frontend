@@ -1,11 +1,10 @@
 import { useDark, useColorMode } from '@vueuse/core';
-import { Common } from '~/models/common';
-import { enumKeys } from '~/utils/common';
+import { UiConfig } from '~/models/ui';
 
 export const useTheme = () => {
-	const themes = enumKeys(Common.Themes);
+	const themes = Object.values(UiConfig.Themes);
 	const themeModes = themes.reduce((a, v) => ({ ...a, [v]: v }), {});
-	const themeDefault = ref<keyof typeof Common.Themes>(themes[0]);
+	const themeDefault = ref<(typeof UiConfig.Themes)[keyof typeof UiConfig.Themes]>(themes[0]);
 
 	const colorTheme = useColorMode({
 		selector: 'html',

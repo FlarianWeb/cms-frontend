@@ -1,29 +1,30 @@
-import { Common } from '~/models/common';
+import { UiConfig, type UiCommon } from './';
 
 export namespace UiToggle {
 	export type Theme = {
 		base: string;
-		theme: Record<keyof typeof Common.Themes, string>;
-		color: Record<keyof typeof Common.Color, string>;
-		size: Record<keyof typeof Common.Size, string>;
+		theme: Record<(typeof UiConfig.Themes)[keyof typeof UiConfig.Themes], string>;
+		color: Record<(typeof UiConfig.Colors)[keyof typeof UiConfig.Colors], string>;
+		size: Record<(typeof UiConfig.Sizes)[keyof typeof UiConfig.Sizes], string>;
 		rounded: string;
 	};
 
 	export type Classes = {
-		classes: {
-			base: string;
-			switcher: string;
-			slider: string;
-		};
+		base: string;
+		switcher: string;
+		slider: string;
 	};
 
-	export type Props = Partial<Common.Disabled & Common.Reverse & Classes> & {
-		theme?: keyof typeof Common.Themes;
-		color?: keyof typeof Common.Color;
-		size?: keyof typeof Common.Size;
-		label?: string;
-		iconOn?: string;
-		iconOff?: string;
+	export type Props = {
+		theme?: (typeof UiConfig.Themes)[keyof typeof UiConfig.Themes];
+		color?: (typeof UiConfig.Colors)[keyof typeof UiConfig.Colors];
+		size?: (typeof UiConfig.Sizes)[keyof typeof UiConfig.Sizes];
+		label?: UiCommon.Label;
+		iconOn?: UiCommon.Icon;
+		iconOff?: UiCommon.Icon;
+		disabled?: UiCommon.Disabled;
+		reverse?: UiCommon.Reverse;
 		square?: boolean;
+		classes?: Classes;
 	};
 }

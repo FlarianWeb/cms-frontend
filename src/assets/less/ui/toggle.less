@@ -71,8 +71,8 @@
 	}
 
 	/* toggle [data-color] */
-	.-each-ui-toggle-color(@i:1; @l:length(@globalColor)) when (@i <= @l) {
-		@color: extract(@globalColor, @i);
+	.-each-ui-toggle-color(@i:1; @l:length(@globalColors)) when (@i <= @l) {
+		@color: extract(@globalColors, @i);
 		&[data-color='@{color}'] {
 			&:focus-visible {
 				.@{ui-toggle-switcher} {

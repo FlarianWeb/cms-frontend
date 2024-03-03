@@ -1,5 +1,5 @@
 import type { UiTheme } from './theme';
-import type { UiToggle } from './toggle';
+import { UiToggle } from './toggle';
 
 export namespace UiConfig {
 	export const Themes = {
@@ -49,9 +49,9 @@ export namespace UiCommon {
 
 	export type Reverse = boolean;
 
-	export type Square = boolean;
+	export type Rounded = boolean;
 
 	export type Skeleton = boolean;
 }
 
-export type { UiTheme, UiToggle };
+export { type UiTheme, UiToggle };

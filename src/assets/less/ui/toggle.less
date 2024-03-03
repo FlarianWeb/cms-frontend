@@ -20,14 +20,16 @@
 	& .@{ui-toggle-switcher} {
 		.pa(0.125rem);
 		.box(flex content-box; 2rem; auto);
-		.transition(background; @duration; @easing) !important;
+		.border-radius(0.25em);
+		.transition(all; @duration; @easing);
 	}
 
 	/* toggle-slider */
 	& .@{ui-toggle-slider} {
 		.grid(1 span; 1 2);
 		.box(1rem; 1rem);
-		.transition(all; @duration; @easing) !important;
+		.border-radius(0.2em);
+		.transition(all; @duration; @easing);
 	}
 
 	/* toggle rounded */
@@ -128,24 +130,34 @@
 }
 
 /* toggle [data-theme] */
+.ui-toggle-data-theme() {
+	&:focus-visible {
+		.@{ui-toggle-switcher} {
+			.outline(rgb(~'@{@{theme}-@{mode}-base-main}') 0.125rem solid; 0.125rem);
+		}
+	}
+	& .@{ui-toggle-switcher} {
+		.background(rgb(~'@{@{theme}-@{mode}-bg-soft}'));
+	}
+	& .@{ui-toggle-slider} {
+		.background(rgb(~'@{@{theme}-@{mode}-bg-main}'));
+	}
+	&.@{ui-toggle--active} {
+		& .@{ui-toggle-switcher} {
+			.background(rgb(~'@{@{theme}-@{mode}-base-main}'));
+		}
+	}
+}
 .-eachTheme(@theme) {
 	.-eachMode(@mode) {
-		html[mode='@{mode}'] .@{ui-toggle}[data-theme='@{theme}']:not([data-color]) {
-			&:focus-visible {
-				.@{ui-toggle-switcher} {
-					.outline(rgb(~'@{@{theme}-@{mode}-base-main}') 0.125rem solid; 0.125rem);
-				}
+		& when (@mode = @default-global-mode) {
+			html .@{ui-toggle}[data-theme='@{theme}']:not([data-color]) {
+				.ui-toggle-data-theme();
 			}
-			& .@{ui-toggle-switcher} {
-				.background(rgb(~'@{@{theme}-@{mode}-bg-soft}'));
-			}
-			& .@{ui-toggle-slider} {
-				.background(rgb(~'@{@{theme}-@{mode}-bg-main}'));
-			}
-			&.@{ui-toggle--active} {
-				& .@{ui-toggle-switcher} {
-					.background(rgb(~'@{@{theme}-@{mode}-base-main}'));
-				}
+		}
+		& when not(@mode = @default-global-mode) {
+			html[mode='@{mode}'] .@{ui-toggle}[data-theme='@{theme}']:not([data-color]) {
+				.ui-toggle-data-theme();
 			}
 		}
 	}

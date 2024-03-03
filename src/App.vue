@@ -15,8 +15,6 @@ pre colorTheme: {{ colorTheme }}
 
 br
 br
-UiToggle
-br
 div skeleton
 UiToggle(theme='secondary', size='xs', skeleton)
 UiToggle(theme='primary', size='sm', skeleton)
@@ -48,7 +46,7 @@ UiToggle(size='sm', theme='secondary', disabled, label='label text')
 br
 UiToggle(size='md', theme='secondary', color='alert', disabled, label='label text')
 br
-UiToggle(size='lg', color='danger', square, reverse, label='label text')
+UiToggle(size='lg', color='danger', rounded, reverse, label='label text')
 	span Slot text
 br
 UiToggle(size='xl', disabled, label='label text')

@@ -1,5 +1,5 @@
-import { Common } from '~/models/common';
-import type { RouteLocationRaw } from 'vue-router/auto';
+import { UiConfig, type UiCommon } from './';
+// import type { RouteLocationRaw } from 'vue-router/auto'; // TODO: Проблема при сборка
 
 export namespace UiButton {
 	export type Target = '_blank' | '_parent' | '_self' | '_top';
@@ -13,7 +13,7 @@ export namespace UiButton {
 	}
 
 	export type RouterLink = {
-		to?: RouteLocationRaw;
+		to?: any; // FIXME: need RouteLocationRaw
 		target?: Target;
 		replace?: boolean;
 		activeClass?: string;
@@ -22,9 +22,9 @@ export namespace UiButton {
 
 	export type Theme = {
 		base: string;
-		theme: Record<keyof typeof Common.Themes, string>;
-		color: Record<keyof typeof Common.Color, string>;
-		size: Record<keyof typeof Common.Size, string>;
+		theme: Record<(typeof UiConfig.Themes)[keyof typeof UiConfig.Themes], string>;
+		color: Record<(typeof UiConfig.Colors)[keyof typeof UiConfig.Colors], string>;
+		size: Record<(typeof UiConfig.Sizes)[keyof typeof UiConfig.Sizes], string>;
 		rounded: string;
 	};
 
@@ -37,10 +37,10 @@ export namespace UiButton {
 		};
 	};
 
-	export type Props = Partial<Common.Disabled & RouterLink & Classes> & {
-		theme?: keyof typeof Common.Themes;
-		color?: keyof typeof Common.Color;
-		size?: keyof typeof Common.Size;
+	export type Props = Partial<RouterLink & Classes> & {
+		theme?: (typeof UiConfig.Themes)[keyof typeof UiConfig.Themes];
+		color?: (typeof UiConfig.Colors)[keyof typeof UiConfig.Colors];
+		size?: (typeof UiConfig.Sizes)[keyof typeof UiConfig.Sizes];
 		variant?: keyof typeof Variant;
 		as?: string;
 		label?: string;
@@ -51,5 +51,6 @@ export namespace UiButton {
 		loading?: boolean;
 		padded?: boolean;
 		block?: boolean;
+		disabled?: UiCommon.Disabled;
 	};
 }

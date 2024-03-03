@@ -24,7 +24,8 @@ export namespace UiToggle {
 		iconOff?: UiCommon.Icon;
 		disabled?: UiCommon.Disabled;
 		reverse?: UiCommon.Reverse;
-		square?: boolean;
+		square?: UiCommon.Square;
+		skeleton?: UiCommon.Skeleton;
 		classes?: Classes;
 	};
 }

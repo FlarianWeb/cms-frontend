@@ -2,7 +2,6 @@
 import { clsx } from 'clsx';
 import { noop, useToggle } from '@vueuse/core';
 
-import { Common } from '~/models/common';
 import { UiButton } from '~/models/ui/button';
 
 /* Options */

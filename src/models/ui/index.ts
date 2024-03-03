@@ -41,13 +41,17 @@ export namespace UiConfig {
 }
 
 export namespace UiCommon {
+	export type Label = string;
+
+	export type Icon = string;
+
 	export type Disabled = boolean;
 
 	export type Reverse = boolean;
 
-	export type Icon = string;
+	export type Square = boolean;
 
-	export type Label = string;
+	export type Skeleton = boolean;
 }
 
 export type { UiTheme, UiToggle };

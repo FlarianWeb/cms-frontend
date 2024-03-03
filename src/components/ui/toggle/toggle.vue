@@ -15,6 +15,7 @@ const {
 	square = false,
 	reverse = false,
 	disabled = false,
+	skeleton = false,
 	classes = { base: 'UiToggle', switcher: 'switcher', slider: 'slider' },
 } = defineProps<UiToggle.Props>();
 
@@ -64,20 +65,25 @@ const dataSize = computed(() => (size ? toggleTheme.size[size] : undefined));
 </script>
 
 <template lang="pug">
-label(
-	:class='toggleClass',
-	:data-theme='dataTheme',
-	:data-color='dataColor',
-	:data-size='dataSize',
-	v-bind='{ disabled: isDisabled, tabindex: isTabindex }',
-	@click='toggleModelValue',
-	@keyup.space='toggleModelValue',
-	@keyup.enter='toggleModelValue',
-	@keypress.prevent='noop'
-)
-	div(:class='switcherClass')
-		div(:class='sliderClass')
-			//- TODO: UI Icon
-	slot
-		template(v-if='label') {{ label }}
+Transition(name='fade')
+	label(v-if='skeleton', :class='toggleClass', :data-size='dataSize', data-skeleton)
+		div(:class='switcherClass')
+			div(:class='sliderClass')
+	label(
+		v-else,
+		:class='toggleClass',
+		:data-theme='dataTheme',
+		:data-color='dataColor',
+		:data-size='dataSize',
+		v-bind='{ disabled: isDisabled, tabindex: isTabindex }',
+		@click='toggleModelValue',
+		@keyup.space='toggleModelValue',
+		@keyup.enter='toggleModelValue',
+		@keypress.prevent='noop'
+	)
+		div(:class='switcherClass')
+			div(:class='sliderClass')
+				//- TODO: UI Icon
+		slot
+			template(v-if='label') {{ label }}
 </template>

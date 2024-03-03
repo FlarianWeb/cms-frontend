@@ -9,10 +9,12 @@
 @ui-toggle--active: ~'@{ui-toggle}--active';
 
 .@{ui-toggle} {
-	.py(0.25rem);
-	.cursor-pointer();
 	.text(inherit; 1em 1em);
 	.box(inline-grid; auto; auto; none; 0.5rem; 1fr; auto 1fr; center; start);
+
+	&:not([data-skeleton]) {
+		.cursor-pointer();
+	}
 
 	/* toggle-switcher */
 	& .@{ui-toggle-switcher} {
@@ -48,18 +50,18 @@
 	&[data-color] {
 		&:focus-visible {
 			.@{ui-toggle-switcher} {
-				.outline(@colorBase 0.125rem solid; 0.125rem);
+				.outline(rgb(@colorBase) 0.125rem solid; 0.125rem);
 			}
 		}
 		& .@{ui-toggle-switcher} {
-			.background(@colorBgSoft);
+			.background(rgb(@colorBgSoft));
 		}
 		& .@{ui-toggle-slider} {
-			.background(@colorBg);
+			.background(rgb(@colorBg));
 		}
 		&.@{ui-toggle--active} {
 			& .@{ui-toggle-switcher} {
-				.background(@colorBase);
+				.background(rgb(@colorBase));
 			}
 		}
 	}
@@ -70,18 +72,35 @@
 		.cursor-not-allowed();
 	}
 
+	/* toggle [data-skeleton] */
+	&[data-skeleton] {
+		& .@{ui-toggle-switcher} {
+			.relative(1; hidden);
+			.background(rgba(@colorBgSoft, 0.5));
+			&:before {
+				content: '';
+				.absolute(1; none; 0 -50% 0 -50%);
+				.gradient(-80; transparent 10%; rgb(@colorBgSoft) 50%; transparent 90%);
+				.animation(skeleton; 2500ms; sine; 0ms; infinite);
+			}
+		}
+		& .@{ui-toggle-slider} {
+			.background(transparent);
+		}
+	}
+
 	/* toggle [data-color] */
 	.-each-ui-toggle-color(@i:1; @l:length(@globalColors)) when (@i <= @l) {
 		@color: extract(@globalColors, @i);
 		&[data-color='@{color}'] {
 			&:focus-visible {
 				.@{ui-toggle-switcher} {
-					.outline(~'@{color-@{color}}' 0.125rem solid; 0.125rem);
+					.outline(rgb(~'@{color-@{color}}') 0.125rem solid; 0.125rem);
 				}
 			}
 			&.@{ui-toggle--active} {
 				& .@{ui-toggle-switcher} {
-					.background(~'@{color-@{color}}');
+					.background(rgb(~'@{color-@{color}}'));
 				}
 			}
 		}
@@ -114,18 +133,18 @@
 		html[mode='@{mode}'] .@{ui-toggle}[data-theme='@{theme}']:not([data-color]) {
 			&:focus-visible {
 				.@{ui-toggle-switcher} {
-					.outline(~'@{@{theme}-@{mode}-base-main}' 0.125rem solid; 0.125rem);
+					.outline(rgb(~'@{@{theme}-@{mode}-base-main}') 0.125rem solid; 0.125rem);
 				}
 			}
 			& .@{ui-toggle-switcher} {
-				.background(~'@{@{theme}-@{mode}-bg-soft}');
+				.background(rgb(~'@{@{theme}-@{mode}-bg-soft}'));
 			}
 			& .@{ui-toggle-slider} {
-				.background(~'@{@{theme}-@{mode}-bg-main}');
+				.background(rgb(~'@{@{theme}-@{mode}-bg-main}'));
 			}
 			&.@{ui-toggle--active} {
 				& .@{ui-toggle-switcher} {
-					.background(~'@{@{theme}-@{mode}-base-main}');
+					.background(rgb(~'@{@{theme}-@{mode}-base-main}'));
 				}
 			}
 		}

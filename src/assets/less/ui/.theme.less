@@ -6,21 +6,30 @@
 /*	Theme builder															*/
 /* #################### - Developer Flarian Web - ######################### */
 .themeConstructor(@theme; @mode; @colorType; @colorTone) {
+	@color: ~'@{@{theme}-@{mode}-@{colorType}-@{colorTone}}';
+
 	& when (@theme = @default-global-theme) {
 		& when (@mode = @default-global-mode) {
 			html:root {
-				--color-@{colorType}-@{colorTone}: ~'@{@{theme}-@{mode}-@{colorType}-@{colorTone}}';
+				--color-@{colorType}-@{colorTone}: @color;
 			}
 		}
 		& when not(@mode = @default-global-mode) {
 			html[mode='@{mode}']:root {
-				--color-@{colorType}-@{colorTone}: ~'@{@{theme}-@{mode}-@{colorType}-@{colorTone}}';
+				--color-@{colorType}-@{colorTone}: @color;
 			}
 		}
 	}
 	& when not(@theme = @default-global-theme) {
-		html[theme='@{theme}'][mode='@{mode}']:root {
-			--color-@{colorType}-@{colorTone}: ~'@{@{theme}-@{mode}-@{colorType}-@{colorTone}}';
+		& when (@mode = @default-global-mode) {
+			html[theme='@{theme}']:root {
+				--color-@{colorType}-@{colorTone}: @color;
+			}
+		}
+		& when not(@mode = @default-global-mode) {
+			html[theme='@{theme}'][mode='@{mode}']:root {
+				--color-@{colorType}-@{colorTone}: @color;
+			}
 		}
 	}
 }

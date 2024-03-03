@@ -17,6 +17,13 @@ br
 br
 UiToggle
 br
+div skeleton
+UiToggle(theme='secondary', size='xs', skeleton)
+UiToggle(theme='primary', size='sm', skeleton)
+UiToggle(theme='primary', size='md', skeleton)
+UiToggle(theme='primary', size='lg', skeleton)
+UiToggle(theme='primary', size='xl', skeleton)
+br
 div theme
 UiToggle(theme='secondary')
 UiToggle(theme='primary')

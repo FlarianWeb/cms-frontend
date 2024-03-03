@@ -1,0 +1,103 @@
+/* #################### - Developer Flarian Web - ######################### */
+/*	position																*/
+/* #################### - Developer Flarian Web - ######################### */
+.position(...) {
+	@position: extract(@arguments, 1);
+	@z-index: extract(@arguments, 2);
+	@overflow: extract(@arguments, 3);
+	@spacing: extract(@arguments, 4);
+
+	& when (length(@arguments) > 0) and (not(@position = none)) {
+		position: @position;
+	}
+	& when (length(@arguments) > 1) and (not(@z-index = none)) {
+		z-index: @z-index;
+	}
+	& when (length(@arguments) > 2) and (not(@overflow = none)) {
+		.overflow(@overflow);
+	}
+	& when (length(@arguments) > 3) and (not(@spacing = none)) {
+		.spacing(@spacing);
+	}
+}
+
+.overflow(...) {
+	& when (length(@arguments) > 0) {
+		overflow: extract(@arguments, 1);
+	}
+}
+
+.spacing(...) {
+	& when (length(@arguments) > 0) and (not(extract(@arguments, 1) = none)) {
+		top: extract(@arguments, 1);
+	}
+	& when (length(@arguments) > 1) and (not(extract(@arguments, 2) = none)) {
+		right: extract(@arguments, 2);
+	}
+	& when (length(@arguments) > 2) and (not(extract(@arguments, 3) = none)) {
+		bottom: extract(@arguments, 3);
+	}
+	& when (length(@arguments) > 3) and (not(extract(@arguments, 4) = none)) {
+		left: extract(@arguments, 4);
+	}
+}
+
+.absolute(...) {
+	& when (length(@arguments) = 0) {
+		.position(absolute);
+	}
+	& when (length(@arguments) = 1) {
+		.position(absolute, extract(@arguments, 1));
+	}
+	& when (length(@arguments) = 2) {
+		.position(absolute, extract(@arguments, 1), extract(@arguments, 2));
+	}
+	& when (length(@arguments) = 3) {
+		.position(absolute, extract(@arguments, 1), extract(@arguments, 2), extract(@arguments, 3));
+	}
+}
+
+.relative(...) {
+	& when (length(@arguments) = 0) {
+		.position(relative);
+	}
+	& when (length(@arguments) = 1) {
+		.position(relative, extract(@arguments, 1));
+	}
+	& when (length(@arguments) = 2) {
+		.position(relative, extract(@arguments, 1), extract(@arguments, 2));
+	}
+	& when (length(@arguments) = 3) {
+		.position(relative, extract(@arguments, 1), extract(@arguments, 2), extract(@arguments, 3));
+	}
+}
+
+.fixed(...) {
+	& when (length(@arguments) = 0) {
+		.position(fixed);
+	}
+	& when (length(@arguments) = 1) {
+		.position(fixed, extract(@arguments, 1));
+	}
+	& when (length(@arguments) = 2) {
+		.position(fixed, extract(@arguments, 1), extract(@arguments, 2));
+	}
+	& when (length(@arguments) = 3) {
+		.position(fixed, extract(@arguments, 1), extract(@arguments, 2), extract(@arguments, 3));
+	}
+}
+
+.sticky(...) {
+	& when (length(@arguments) = 0) {
+		.position(sticky);
+	}
+	& when (length(@arguments) = 1) {
+		.position(sticky, extract(@arguments, 1));
+	}
+	& when (length(@arguments) = 2) {
+		.position(sticky, extract(@arguments, 1), extract(@arguments, 2));
+	}
+	& when (length(@arguments) = 3) {
+		.position(sticky, extract(@arguments, 1), extract(@arguments, 2), extract(@arguments, 3));
+	}
+}

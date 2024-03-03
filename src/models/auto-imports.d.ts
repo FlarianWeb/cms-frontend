@@ -6,7 +6,6 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
-  const arrayToObjectValues: typeof import('../hooks/ui/useUI')['arrayToObjectValues']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
@@ -56,7 +55,6 @@ declare global {
   const unref: typeof import('vue')['unref']
   const useAsyncState: typeof import('@vueuse/core')['useAsyncState']
   const useAttrs: typeof import('vue')['useAttrs']
-  const useCalc: typeof import('../hooks/calc/useCalc')['useCalc']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useLink: typeof import('vue-router/auto')['useLink']

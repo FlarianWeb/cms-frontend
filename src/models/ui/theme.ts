@@ -8,7 +8,7 @@ export namespace UiTheme {
 
 	export type ThemeConfig = Record<
 		(typeof UiConfig.Themes)[keyof typeof UiConfig.Themes],
-		Record<
+		{ color: string } & Record<
 			(typeof UiConfig.Modes)[keyof typeof UiConfig.Modes],
 			Record<
 				(typeof UiConfig.ColorTypes)[keyof typeof UiConfig.ColorTypes],

@@ -22,9 +22,24 @@ export namespace UiToggle {
 		label?: UiCommon.Label;
 		iconOn?: UiCommon.Icon;
 		iconOff?: UiCommon.Icon;
-		disabled?: UiCommon.Disabled;
+		rounded?: UiCommon.Rounded;
 		reverse?: UiCommon.Reverse;
-		square?: boolean;
+		disabled?: UiCommon.Disabled;
+		skeleton?: UiCommon.Skeleton;
 		classes?: Classes;
+	};
+
+	export const DefaultsProps = {
+		theme: undefined,
+		color: undefined,
+		size: undefined,
+		label: undefined,
+		iconOn: undefined, // TODO: add after ui icon
+		iconOff: undefined, // TODO: add after ui icon
+		rounded: false,
+		reverse: false,
+		disabled: false,
+		skeleton: false,
+		classes: () => ({ base: 'UiToggle', switcher: 'switcher', slider: 'slider' }),
 	};
 }

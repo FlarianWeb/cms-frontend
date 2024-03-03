@@ -25,6 +25,7 @@ export const basic: UiTheme.BasicConfig = {
 
 export const themes: UiTheme.ThemeConfig = {
 	primary: {
+		color: '#7162ff',
 		light: {
 			bg: {
 				main: '#f3f4f6',
@@ -62,6 +63,7 @@ export const themes: UiTheme.ThemeConfig = {
 	},
 
 	secondary: {
+		color: '#f31260',
 		light: {
 			bg: {
 				main: '#f3f4f6',

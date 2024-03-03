@@ -1,27 +1,21 @@
-<script setup lang="ts">
+<script setup lang="ts" name="UiToggle">
 import { clsx } from 'clsx';
 import { noop, useToggle } from '@vueuse/core';
 
-import { UiConfig, type UiToggle } from '~/models/ui';
+import { UiConfig, UiToggle } from '~/models/ui';
+
+defineOptions({
+	name: 'UiToggle',
+});
 
 /* Define props */
-const {
-	size = undefined,
-	theme = undefined,
-	color = undefined,
-	label = undefined,
-	iconOn = undefined, // TODO: add after ui icon
-	iconOff = undefined, // TODO: add after ui icon
-	square = false,
-	reverse = false,
-	disabled = false,
-	classes = { base: 'UiToggle', switcher: 'switcher', slider: 'slider' },
-} = defineProps<UiToggle.Props>();
+
+const props = withDefaults(defineProps<UiToggle.Props>(), UiToggle.DefaultsProps);
 
 /* Define model */
 const modelValue = defineModel({ default: false });
 const toggleModelValue = () => {
-	if (!disabled) {
+	if (!props.disabled) {
 		useToggle(modelValue)();
 	}
 };
@@ -30,9 +24,9 @@ const toggleModelValue = () => {
 const { themeObjectConstructor } = useUI();
 
 /* Classes */
-const baseClass = computed(() => classes.base || 'UiToggle');
-const switcherClass = computed(() => `${baseClass.value}-${classes.switcher || 'switcher'}`);
-const sliderClass = computed(() => `${baseClass.value}-${classes.slider || 'slider'}`);
+const baseClass = computed(() => props.classes.base || 'UiToggle');
+const switcherClass = computed(() => `${baseClass.value}-${props.classes.switcher || 'switcher'}`);
+const sliderClass = computed(() => `${baseClass.value}-${props.classes.slider || 'slider'}`);
 
 /* Toggle theme  */
 const toggleTheme: UiToggle.Theme = {
@@ -47,37 +41,42 @@ const toggleTheme: UiToggle.Theme = {
 const toggleClass = computed(() =>
 	clsx(
 		toggleTheme.base,
-		!square && toggleTheme.rounded,
-		reverse && !modelValue.value && `${baseClass.value}--active`,
-		!reverse && modelValue.value && `${baseClass.value}--active`
+		props.rounded && toggleTheme.rounded,
+		props.reverse && !modelValue.value && `${baseClass.value}--active`,
+		!props.reverse && modelValue.value && `${baseClass.value}--active`
 	)
 );
 
 /* Toggle theme attributes */
-const isDisabled = computed(() => (disabled ? 'disabled' : undefined));
-const isTabindex = computed(() => (disabled ? undefined : 1));
+const isDisabled = computed(() => (props.disabled ? 'disabled' : undefined));
+const isTabindex = computed(() => (props.disabled ? undefined : 1));
 
 /* Data attributes */
-const dataTheme = computed(() => (theme ? toggleTheme.theme[theme] : undefined));
-const dataColor = computed(() => (color ? toggleTheme.color[color] : undefined));
-const dataSize = computed(() => (size ? toggleTheme.size[size] : undefined));
+const dataTheme = computed(() => (props.theme ? toggleTheme.theme[props.theme] : undefined));
+const dataColor = computed(() => (props.color ? toggleTheme.color[props.color] : undefined));
+const dataSize = computed(() => (props.size ? toggleTheme.size[props.size] : undefined));
 </script>
 
 <template lang="pug">
-label(
-	:class='toggleClass',
-	:data-theme='dataTheme',
-	:data-color='dataColor',
-	:data-size='dataSize',
-	v-bind='{ disabled: isDisabled, tabindex: isTabindex }',
-	@click='toggleModelValue',
-	@keyup.space='toggleModelValue',
-	@keyup.enter='toggleModelValue',
-	@keypress.prevent='noop'
-)
-	div(:class='switcherClass')
-		div(:class='sliderClass')
-			//- TODO: UI Icon
-	slot
-		template(v-if='label') {{ label }}
+Transition(name='fade')
+	label(v-if='skeleton', :class='toggleClass', :data-size='dataSize', data-skeleton)
+		div(:class='switcherClass')
+			div(:class='sliderClass')
+	label(
+		v-else,
+		:class='toggleClass',
+		:data-theme='dataTheme',
+		:data-color='dataColor',
+		:data-size='dataSize',
+		v-bind='{ disabled: isDisabled, tabindex: isTabindex }',
+		@click='toggleModelValue',
+		@keyup.space='toggleModelValue',
+		@keyup.enter='toggleModelValue',
+		@keypress.prevent='noop'
+	)
+		div(:class='switcherClass')
+			div(:class='sliderClass')
+				//- TODO: UI Icon
+		slot
+			template(v-if='label') {{ label }}
 </template>

@@ -2,6 +2,6 @@
 
 <template lang="pug">
 div
-	h1(data-aq='e2e-h1') Hello world!
+	h1(data-aq='e2e-h1') Hello world zzz!
 	p(data-aq='e2e-p') paragraph
 </template>

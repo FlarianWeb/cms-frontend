@@ -9,6 +9,10 @@ import '@/icons/flarian/style.css';
 /* Import styles */
 import '@/less/main.less';
 
+/* Import global components */
+import { VueQueryPlugin } from '@tanstack/vue-query';
+
+
 const setup = async () => {
 	const app = createApp(App);
 
@@ -16,6 +20,8 @@ const setup = async () => {
 	Object.values(import.meta.glob('~/modules/*.ts', { eager: true })).forEach(
 		(module: any) => module?.install?.(app)
 	);
+
+	app.use(VueQueryPlugin);
 
 	app.mount('#app');
 };
